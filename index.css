@@ -1,17 +1,89 @@
+body
+{
+    background-color: rgb(255, 250, 243);
+}
+
+#title_logo
+{
+    font-weight: bold;
+    font-size: 40px;
+    font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+    color: rgb(255, 96, 68);
+}
+
+#title_logo_img
+{
+    height: 100px;
+    width: 100px;
+    display: block;
+}
+
 #content_buttons
 {
     margin: auto;
     width: 80%;
-    border: 3px solid #73AD21;
     padding: 10px;
     text-align: center;
 }
 
-#content_btn
+.content_btn
 {
     display: inline-block;
     width: 15%;
+    height: 40px;
     margin-left: 10px;
     margin-right: 10px;
     overflow: hidden;
+    font-size: 20px;
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+    border-style: none;
+    line-height: 40px;
+    background-color: bisque;
+    border-radius: 20px;
+}
+
+.content_btn:hover
+{
+    background-color: rgb(58, 78, 104);
+    color: azure;
+}
+
+#content_advs
+{
+    height: auto;
+    width: auto;
+    overflow: hidden;
+}
+
+.content_img_adv
+{
+    height: 300px;
+    margin-left: auto;
+    margin-right: auto;
+    display: block;
+    border-radius: 10px;
+    border-style: groove;
+    width: 50%;
+    object-fit: cover;
+}
+
+.tail
+{
+    background-image: url("https://www.caf.com/media/2244219/50a-banners-tyt_1583x480.jpg?anchor=center&amp;mode=crop&amp;width=1421&amp;height=386&amp;rnd=132230413070000000");
+}
+
+#copyright_buttons
+{
+    background-color: transparent;
+    border-style: none;
+    text-align: center;
+    text-decoration: underline;
+    display: inline-block;
+    
+    color: rgb(4, 12, 17);
+    margin: 4px 2px;
+    cursor: pointer;
+    
+    font-size: 20px;
+    font-family: 'Times New Roman', Times, serif;
 }

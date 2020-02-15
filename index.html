@@ -12,33 +12,53 @@
 <body>
     <!--Title bar here-->
     <div class="title">
-    <h2><b> Hidden Treasure<b><h2>
-    <img src= "img/logo.png" height="42" width="42>
-    </div>
-
+        <h2 id="title_logo">Hidden Treasure</h2>
+        <img src= "img/logo.png" id="title_logo_img">
+        <!-- <div>
+            <label id="title_title" class="name">What are you looking for:</label>
+            <input id="title_title" class="text" type="text" id="fname" name="fname">
+            <input id="title_title" class="button" type="submit" value="Search">
+        </div> -->
+        <div class="topnav">
+        <a class="active" href="#home">Home</a>
+        <a href="#about">About</a>
+        <a href="#contact">Contact</a>
+        <div class="login-container">
+          <form action="/action_page.php">
+            <input type="text" placeholder="Username" name="username">
+            <input type="text" placeholder="Password" name="psw">
+            <button type="submit">Login</button>
+          </form>
+        </div>
+           </div>
+      </div>
     <!--Main content-->
     <hr>
     <div class="content">
-        Content Here
         <div id="content_buttons">
-            <button type="button" id="content_btn">Shoes</button>
-            <button type="button" id="content_btn">Clothes</button>
-            <button type="button" id="content_btn">Pants</button>
-            <button type="button" id="content_btn">Electronic Devices</button>
-            <button type="button" id="content_btn">Books</button>
+            <button type="button" id="btn1" class="content_btn">Shoes</button>
+            <button type="button" id="btn2" class="content_btn">Clothes</button>
+            <button type="button" id="btn3" class="content_btn">Pants</button>
+            <button type="button" id="btn4" class="content_btn">Electronic Devices</button>
+            <button type="button" id="btn5" class="content_btn">Books</button>
+        </div>
+
+        <div id="content_advs">
+            <img src="https://images.journeys.com/images/products/1_514962_ZM_WHITE_ALT1.JPG" alt="shoes" class="content_img_adv">
         </div>
     </div>
     <hr>
 
     <!--Tail Information-->
     <div class="tail">
-        <script src="..."></script>
-        <script src="..."></script>
-        <script src="..."></script>
-        ...123123
-        <script src="..."></script>
-        <p></p>&copy; 2015 RapidTables.com<p>
-        <script>(function() { console.log('Custom code'); })();</script>
+        <button type="button" id="copyright_buttons">Help</button>
+        |
+        <button type="button" id="copyright_buttons">Information</button>
+        |
+        <button type="button" id="copyright_buttons">Reference</button>
+        |
+        <button type="button" id="copyright_buttons">Support</button>
+        |
+        <button type="button" id="copyright_buttons">Contact Sida</button>
+        <p style="font-size:20px;">&copy; 2020 CIS 454 Group 4</p>
     </div>
-</body>
-</html>
