@@ -7,15 +7,26 @@ body
 {
     background-image: url("https://www.simplyss.com/blog/wp-content/uploads/2018/09/sell-and-donate-your-stuff-illustration.png");
     background-size: contain;
-    background-attachment: fixed;
+    background-attachment: scroll;
     width: 100%;
     height: 50%;
+}
+
+#logo_bar
+{
+    background-color: rgba(255, 158, 102, 0.8);
+    height: 120px;
+    border-style: dashed;
+    position: sticky;
+    width: 99%;
+    top: 10px;
+    z-index: 10;
 }
 
 #title_logo
 {
     margin-left: 40px;
-    margin-top: 30px;
+    margin-top: 25px;
     font-weight: bold;
     font-size: 50px;
     font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
@@ -36,11 +47,12 @@ body
     font-size: 50px;
     font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
     font-weight: bolder;
-    margin-top: 10px;
+    margin-top: 50px;
     margin-left: auto;
     margin-right: auto;
     display: block;
     text-align: center;
+    
 }
 
 #title_search_cover .tb
