@@ -1,6 +1,7 @@
 body
 {
     background-color: rgb(255, 206, 166);
+    margin: 0;
 }
 
 .title
@@ -16,17 +17,17 @@ body
 {
     background-color: rgba(255, 158, 102, 0.8);
     height: 120px;
-    border-style: dashed;
     position: sticky;
-    width: 99%;
-    top: 10px;
+    width: 100%;
+    top: 0;
     z-index: 10;
+    overflow: hidden;
 }
 
 #title_logo
 {
-    margin-left: 40px;
-    margin-top: 25px;
+    margin-left: 20px;
+    margin-top: 30px;
     font-weight: bold;
     font-size: 50px;
     font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
@@ -40,6 +41,31 @@ body
     margin-top: 20px;
     height: 80px;
     width: 80px;
+    float: left;
+}
+
+#title_logo_buttons
+{
+    float: right;
+    height: 100%;
+    width: 50%;
+}
+
+.title_logo_button
+{
+    float: right;
+    height: 100%;
+    margin-right: 20px;
+    font-size: 30px;
+    font-weight: bold;
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+    outline: none;
+    cursor: pointer;
+}
+
+.title_logo_button:hover
+{
+    color: rgb(106, 159, 228);
 }
 
 #title_label
@@ -207,10 +233,13 @@ body
 
 #content_buttons
 {
-    margin: auto;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 10px;
     width: 80%;
     padding: 10px;
     text-align: center;
+
 }
 
 .content_btn
@@ -226,8 +255,9 @@ body
     border-style: none;
     line-height: 40px;
     background-color: bisque;
-    border-radius: 20px;
+    border-radius: 10px;
     color: #ac3b3b;
+    cursor: pointer;
 }
 
 .content_btn:hover
@@ -275,20 +305,45 @@ body
 .tail
 {
     background-image: url("https://www.caf.com/media/2244219/50a-banners-tyt_1583x480.jpg?anchor=center&amp;mode=crop&amp;width=1421&amp;height=386&amp;rnd=132230413070000000");
+    background-attachment: scroll;
+    margin: 0;
+    padding: 0;
+    height: 100px;
 }
 
 #copyright_buttons
+{
+    height: 100%;
+    width: 50%;
+    float: left;
+    line-height: 100px;
+}
+
+#copyright_button
 {
     background-color: transparent;
     border-style: none;
     text-align: center;
     text-decoration: underline;
-    display: inline-block;
     
     color: rgb(4, 12, 17);
     margin: 4px 2px;
     cursor: pointer;
+    margin-left: 15px;
+    padding: 5px;
     
     font-size: 20px;
+    font-weight: bold;
     font-family: 'Times New Roman', Times, serif;
+}
+
+#tail_copyright
+{
+    float: right;
+    height: 100%;
+    text-align: center;
+    line-height: 100px;
+    font-size: 25px;
+    font-family: 'Times New Roman', Times, serif;
+    margin-right: 5%;
 }
