@@ -239,7 +239,7 @@ body
     width: 80%;
     padding: 10px;
     text-align: center;
-
+    overflow: hidden;
 }
 
 .content_btn
@@ -317,6 +317,7 @@ body
     width: 50%;
     float: left;
     line-height: 100px;
+    overflow: hidden;
 }
 
 #copyright_button
@@ -346,4 +347,5 @@ body
     font-size: 25px;
     font-family: 'Times New Roman', Times, serif;
     margin-right: 5%;
+    overflow: hidden;
 }
