@@ -2,8 +2,6 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <!-- <meta name="viewport" content="width=device-width, initial-scale=1.0"> -->
-    <!-- <meta http-equiv="X-UA-Compatible" content="ie=edge"> -->
     <meta name="description" content="This is a website for people to buy & sell their used stuffs">
     <title>Hidden Treasure</title>
     <link rel="stylesheet" href="index.css">
@@ -18,7 +16,7 @@
             <img src= "img/logo.png" id="title_logo_img" alt="treasure logo">
             <h2 id="title_logo">Hidden Treasure</h2>
             <div id="title_logo_buttons">
-                <button class="title_logo_button">Login</button>
+                <button class="title_logo_button" onclick="location.href='login.html'">Login</button>
                 <button class="title_logo_button">Signup</button>
                 <button class="title_logo_button">Help</button>
             </div>
@@ -67,11 +65,13 @@
     <hr>
     <div class="tail">
         <div id="copyright_buttons">
-            <button type="button" id="copyright_button">Help</button>
-            <button type="button" id="copyright_button">Information</button>
-            <button type="button" id="copyright_button">Reference</button>
-            <button type="button" id="copyright_button">Support</button>
-            <button type="button" id="copyright_button">Contact Sida</button>
+            <button type="button" id="copyright_button" onclick="location.href='info.html#info_help'">Help</button>
+            <button type="button" id="copyright_button" onclick="location.href='info.html#info_info'">Information</button>
+            <button type="button" id="copyright_button" onclick="location.href='https\:\/\/stockx.com/'">Reference</button>
+            <button type="button" id="copyright_button" onclick="location.href='https\:\/\/github.com/teamclouday/HiddenTreasure'">Support</button>
+            <button type="button" id="copyright_button" onclick="location.href='mailto:teamclouday@gmail.com'">Contact Sida</button>
         </div>
         <div id="tail_copyright">&copy; 2020 CIS 454 Group 4</div>
     </div>
+</body>
+</html>
