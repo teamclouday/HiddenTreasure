@@ -362,17 +362,19 @@ body
     margin-bottom: 20px;
     font-family: Arial, Helvetica, sans-serif;
     font-size: 25px;
+    background-color: rgb(238, 209, 172);
+    padding: 20px;
 }
 
 .login
 {
-    border-style: dashed;
+    border-style: groove;
     border-radius: 10px;
     margin-left: auto;
     margin-right: auto;
     margin-top: 20px;
     width: 500px;
-    height: 800px;
+    height: 700px;
     background-color: antiquewhite;
 
     font-family: Arial, Helvetica, sans-serif;

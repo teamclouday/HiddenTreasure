@@ -34,14 +34,28 @@
     </div>
 
     <!--login content here-->
-    <div class="login" style="z-index: 5; position: relative;">
-        <center style="color: rgb(92, 55, 255);"><h3>Manage Your Account</h3></center>
+    <form class="login" style="z-index: 5; position: relative;" name="signup">
+        <center style="color: rgb(92, 55, 255);"><h3>Sign Up Your Account</h3></center>
         <label for="uname"><b>Username</b></label>
         <input type="text" placeholder="Enter Username" name="uname" required>
         <label for="psw"><b>Password</b></label>
         <input type="password" placeholder="Enter Password" name="psw" required>
-        <a id="forget">Forget Your Password?</a>
-        <button type="submit">Log In</button>
+        <label for="sec"><b>Security Question</b></label>
+        <select id="security">
+            <option value="birth">Your Best Friend's Name</option>
+            <option value="pet">Your Pet's Name</option>
+            <option value="drive">Last 5 digit of Driver's Liscense</option>
+            <option value="town">Town/City that Your Parents Meet</option>
+        </select>
+        <input type="text" placeholder="Enter Your Answer" name="sec" required>
+        <!-- <a id="forget">Forget Your Password?</a> -->
+        
+        <button type="submit" disabled="true" id="signupBtn">Sign Up</button>
+        <div id="agree">
+            <input type="checkbox" name="agree" value="agree" id="signupAgree" onclick="agreeClickEvent()">
+            <label for="agree">Click if you agree with <a href="info.html#info_help">Term of Privacy</a></label>
+        </div>
+
         <style>
             .login label{
                 display: block;
@@ -72,7 +86,7 @@
                 position: relative;
                 margin-left: auto;
                 margin-right: auto;
-                margin-top: 80px;
+                margin-top: 60px;
                 color: rgb(255, 255, 255);
                 border-style: none;
                 border-color: black;
@@ -90,7 +104,11 @@
             .login button:hover{
                 background-color: #203d13;
             }
-            .login #forget
+            .login button:disabled{
+                background-color: #203d13;
+                cursor: default;
+            }
+            /* .login #forget
             {
                 display: block;
                 position: relative;
@@ -104,12 +122,53 @@
                 cursor: pointer;
                 color: rgb(67, 133, 2);
                 font-weight: bold;
-            }
-            .login #forget:hover{
+            } */
+            /* .login #forget:hover{
                 color: rgb(133, 28, 2);
+            } */
+            .login #security{
+                display: block;
+                position: relative;
+                margin-left: auto;
+                margin-right: auto;
+                margin-top: 10px;
+                width: 55%;
+                height: 30px;
+                font-size: 15px;
+                border-radius: 5px;
+                font-family: Arial, Helvetica, sans-serif;
+            }
+            .login #agree{
+                display: block;
+                position: relative;
+                margin-left: auto;
+                margin-right: auto;
+                margin-top: 20px;
+                height: 30px;
+                width: 55%;
+            }
+            .login #agree input{
+                position: absolute;
+                height: 20px;
+                margin:0;
+                width: 40%;
+                top: 5px;
+                cursor: pointer;
+                z-index: 4;
+            }
+            .login #agree label{
+                position: absolute;
+                margin: 0;
+                top: 8px;
+                text-align: right;
+                font-size: 12px;
+                font-family: 'Times New Roman', Times, serif;
+                width: 100%;
+                height: 20px;
+                z-index: 2;
             }
         </style>
-    </div>
+    </form>
 
     <!--Tail Information-->
     <hr>
