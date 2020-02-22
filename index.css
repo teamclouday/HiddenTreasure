@@ -363,3 +363,18 @@ body
     font-family: Arial, Helvetica, sans-serif;
     font-size: 25px;
 }
+
+.login
+{
+    border-style: dashed;
+    border-radius: 10px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 20px;
+    width: 500px;
+    height: 800px;
+    background-color: antiquewhite;
+
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 25px;
+}
