@@ -15,7 +15,7 @@ if(isset($_REQUEST['submit']))
     $conn = mysqli_connect($db_host, $db_username, $db_password, $db_name);
     if(mysqli_connect_error())
     {
-        die('Connect Error (' . mysqli_connect_errno() . ') ' . mysqli_connect_errno());
+        die('Connect Error (' . mysqli_connect_errno() . ') ' . mysqli_connect_error());
         create_alert("Failed to connect local database");
     }
 
