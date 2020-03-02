@@ -1,14 +1,24 @@
-# Hidden Treasure
+# hiddentreasure
 
-A website built for people to exchange their old stuff for better use  
+## Project setup
+```
+npm install
+```
 
-------
+### Compiles and hot-reloads for development
+```
+npm run serve
+```
 
-Now the website is alive!  
-[Click Here](http://hidden-treasure.online) to see it!  
+### Compiles and minifies for production
+```
+npm run build
+```
 
-------
+### Lints and fixes files
+```
+npm run lint
+```
 
-Reference Website:  
-1. https://stockx.com/  
-2. https://bitskins.com/
+### Customize configuration
+See [Configuration Reference](https://cli.vuejs.org/config/).
