@@ -1,11 +1,9 @@
 <template>
-<div class="title">
-    <div id="logo_bar">
-        <img src= "../assets/logo.png" id="title_logo_img" alt="treasure logo">
-        <h2 id="title_logo">Hidden Treasure</h2>
-        <div id="title_logo_buttons">
-            <router-link class="title_logo_button" to="/">Home</router-link>
-        </div>
+<div id="logo_bar">
+    <img src= "../assets/logo.png" id="title_logo_img" alt="treasure logo">
+    <h2 id="title_logo">Hidden Treasure</h2>
+    <div id="title_logo_buttons">
+        <router-link class="title_logo_button" to="/">Home</router-link>
     </div>
 </div>
 </template>
