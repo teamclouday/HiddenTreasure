@@ -1,5 +1,5 @@
 <template>
-<form class="login" style="z-index: 5; position: relative;" name="signup" method="post" action="post_signup.php">
+<form class="login" style="z-index: 5; position: relative;" name="signup">
 <center style="color: rgb(92, 55, 255);"><h3>Sign Up Your Account</h3></center>
 <label for="uname"><b>Username</b></label>
 <input type="text" placeholder="Enter Username" name="uname" required>
@@ -15,18 +15,46 @@
 <input type="text" placeholder="Enter Your Answer" name="sec" required>
 <!-- <a id="forget">Forget Your Password?</a> -->
 
-<input type="submit" id="signupBtn" name="submit" value="Sign Up" disabled>
+<input type="submit" id="signupBtn" name="submit" value="Sign Up" onclick="" disabled>
 <div id="agree">
-    <input type="checkbox" name="agree" value="agree" id="signupAgree" onclick="agreeClickEvent()">
+    <input type="checkbox" name="agree" value="agree" id="signupAgree">
     <label for="agree">Click if you agree with <a href="info.html#info_terms">Term of Privacy</a></label>
 </div>
 </form>
 </template>
 
 <script>
+import axios from 'axios'
+var $ = require('jquery')
+
 export default {
     name: "SignupForm"
 }
+
+// set event listener for checkbox
+$(document).on('change', 'input[name="agree"]', function(){
+    if(this.checked){
+        $('#signupBtn').prop('disabled', false)
+    }
+    else{
+        $('#signupBtn').prop('disabled', true)
+    }
+})
+
+// set event listener for submit button
+$(document).on('click', 'input[name="submit"]', function(){
+    var data = {
+        "uname": $('input[name="uname"]').val(),
+        "psw": $('input[name="psw"]').val(),
+        "sec": $('input[name="sec"]').val(),
+        "sec_option": $('input[name="sec_option"]:selected').val()
+    }
+    console.log(data)
+    axios.post('../backend/signup.php', data).then(
+        res => console.log(res.request.response)
+    )
+})
+
 </script>
 
 <style scoped>

@@ -9,6 +9,29 @@
     <meta name="description" content="This is a website for people to buy & sell their used stuffs">
   </head>
   <body>
+    <!-- The core Firebase JS SDK is always required and must be listed first -->
+    <script src="https://www.gstatic.com/firebasejs/7.9.3/firebase-app.js"></script>
+
+    <!-- TODO: Add SDKs for Firebase products that you want to use
+     https://firebase.google.com/docs/web/setup#available-libraries -->
+    <script src="https://www.gstatic.com/firebasejs/7.9.3/firebase-analytics.js"></script>
+
+    <script>
+      // Your web app's Firebase configuration
+      var firebaseConfig = {
+        apiKey: "AIzaSyDfAqPNHtw4x-cql76K7Lwaur7xXaKmvjU",
+        authDomain: "cis454hiddentreasure.firebaseapp.com",
+        databaseURL: "https://cis454hiddentreasure.firebaseio.com",
+        projectId: "cis454hiddentreasure",
+        storageBucket: "cis454hiddentreasure.appspot.com",
+        messagingSenderId: "808239440826",
+        appId: "1:808239440826:web:e0f2b08ab6d2d1128e7383",
+        measurementId: "G-JZV0MMBP55"
+      };
+      // Initialize Firebase
+      firebase.initializeApp(firebaseConfig);
+      firebase.analytics();
+    </script>
     <style>
       body
       {
