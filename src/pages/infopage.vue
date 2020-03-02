@@ -1,5 +1,8 @@
 <template>
   <div>
+    <vue-headful
+      title="Hidden Treasure Info"
+    />
     <TitleBar/>
     <InfoContent/>
     <Tail/>

@@ -73,7 +73,6 @@ export default {
     margin-right: auto;
     border-radius: 10px;
     margin-top: 10px;
-    border-style: dashed
 }
 
 .content_img_adv

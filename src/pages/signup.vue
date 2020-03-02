@@ -1,5 +1,8 @@
 <template>
     <div>
+        <vue-headful
+            title="Sign Up"
+        />
         <div id="login_background"></div>
         <TitleBar/>
         <SignupForm/>

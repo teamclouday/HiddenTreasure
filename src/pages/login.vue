@@ -1,5 +1,8 @@
 <template>
 <div>
+    <vue-headful
+        title="Login"
+    />
     <div id="login_background"></div>
     <TitleBar/>
     <LoginForm/>
