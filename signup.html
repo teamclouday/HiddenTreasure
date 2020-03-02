@@ -34,14 +34,14 @@
     </div>
 
     <!--login content here-->
-    <form class="login" style="z-index: 5; position: relative;" name="signup">
+    <form class="login" style="z-index: 5; position: relative;" name="signup" method="post" action="post_signup.php">
         <center style="color: rgb(92, 55, 255);"><h3>Sign Up Your Account</h3></center>
         <label for="uname"><b>Username</b></label>
         <input type="text" placeholder="Enter Username" name="uname" required>
         <label for="psw"><b>Password</b></label>
         <input type="password" placeholder="Enter Password" name="psw" required>
         <label for="sec"><b>Security Question</b></label>
-        <select id="security">
+        <select id="security" name="sec_option">
             <option value="birth">Your Best Friend's Name</option>
             <option value="pet">Your Pet's Name</option>
             <option value="drive">Last 5 digit of Driver's Liscense</option>
@@ -50,7 +50,7 @@
         <input type="text" placeholder="Enter Your Answer" name="sec" required>
         <!-- <a id="forget">Forget Your Password?</a> -->
         
-        <button type="submit" disabled="true" id="signupBtn">Sign Up</button>
+        <input type="submit" id="signupBtn" name="submit" value="Sign Up" disabled>
         <div id="agree">
             <input type="checkbox" name="agree" value="agree" id="signupAgree" onclick="agreeClickEvent()">
             <label for="agree">Click if you agree with <a href="info.html#info_terms">Term of Privacy</a></label>
@@ -81,7 +81,7 @@
                 border-radius: 10px;
                 outline: none;
             }
-            .login button{
+            #signupBtn{
                 display: block;
                 position: relative;
                 margin-left: auto;
@@ -101,10 +101,10 @@
                 outline: none;
                 cursor: pointer;
             }
-            .login button:hover{
+            #signupBtn:hover{
                 background-color: #203d13;
             }
-            .login button:disabled{
+            #signupBtn:disabled{
                 background-color: #203d13;
                 cursor: default;
             }
