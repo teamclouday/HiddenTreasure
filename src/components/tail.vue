@@ -1,8 +1,8 @@
 <template>
 <div class="tail">
     <div id="copyright_buttons">
-        <button type="button" id="copyright_button" onclick="location.href='info.html#info_help'">Help</button>
-        <button type="button" id="copyright_button" onclick="location.href='info.html#info_info'">Information</button>
+        <router-link type="button" id="copyright_button" to="/info#info_help">Help</router-link>
+        <router-link type="button" id="copyright_button" to="/info#info_info">Information</router-link>
         <button type="button" id="copyright_button" onclick="location.href='https\:\/\/stockx.com/'">Reference</button>
         <button type="button" id="copyright_button" onclick="location.href='https\:\/\/github.com/teamclouday/HiddenTreasure'">Support</button>
         <button type="button" id="copyright_button" onclick="location.href='mailto:teamclouday@gmail.com'">Contact Sida</button>

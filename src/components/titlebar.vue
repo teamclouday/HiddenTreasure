@@ -1,9 +1,11 @@
 <template>
-<div id="logo_bar">
-    <img src= "img/logo.png" id="title_logo_img" alt="treasure logo">
-    <h2 id="title_logo">Hidden Treasure</h2>
-    <div id="title_logo_buttons">
-        <button class="title_logo_button" onclick="location.href='index.html'">Home</button>
+<div class="title">
+    <div id="logo_bar">
+        <img src= "../assets/logo.png" id="title_logo_img" alt="treasure logo">
+        <h2 id="title_logo">Hidden Treasure</h2>
+        <div id="title_logo_buttons">
+            <router-link class="title_logo_button" to="/">Home</router-link>
+        </div>
     </div>
 </div>
 </template>
@@ -63,6 +65,10 @@ export default {
     font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
     outline: none;
     cursor: pointer;
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    color: #fff;
 }
 
 .title_logo_button:hover

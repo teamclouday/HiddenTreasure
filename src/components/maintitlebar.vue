@@ -6,7 +6,7 @@
         <div id="title_logo_buttons">
             <button class="title_logo_button" onclick="location.href='login.html'">Login</button>
             <button class="title_logo_button" onclick="location.href='signup.html'">Signup</button>
-            <button class="title_logo_button" onclick="location.href='info.html#info_help'">Help</button>
+            <router-link class="title_logo_button" to="/info#info_help">Help</router-link>
         </div>
     </div>
     <div style="clear: both;">
@@ -94,6 +94,10 @@ export default {
     font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
     outline: none;
     cursor: pointer;
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    color: #fff;
 }
 
 .title_logo_button:hover

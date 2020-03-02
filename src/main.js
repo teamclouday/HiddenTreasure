@@ -1,20 +1,8 @@
 import Vue from 'vue'
-import VueRouter from 'vue-router'
-import AppHome from './pages/mainpage.vue'
-import AppInfo from './pages/infopage.vue'
-
-Vue.use(VueRouter)
-
-const router = new VueRouter({
-  mode: 'history',
-  base: __dirname,
-  routes:[
-    {path: '/', name: 'Home', component: AppHome},
-    {path: '/info', name: 'Info', component: AppInfo}
-  ]
-})
+import router from './router'
+import App from './pages/template.vue'
 
 new Vue({
   router,
-  render: h => h(AppHome)
+  render: h => h(App)
 }).$mount('#app')

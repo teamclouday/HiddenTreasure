@@ -53,6 +53,7 @@ export default {
     border-radius: 10px;
     color: #ac3b3b;
     cursor: pointer;
+    outline: none;
 }
 
 .content_btn:hover

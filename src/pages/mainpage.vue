@@ -4,6 +4,7 @@
     <MainContent/>
     <hr>
     <Tail/>
+    <router-view></router-view>
   </div>
 </template>
 
