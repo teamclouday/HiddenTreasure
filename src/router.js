@@ -2,6 +2,8 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 import AppHome from './pages/mainpage.vue'
 import AppInfo from './pages/infopage.vue'
+import AppSignup from './pages/signup.vue'
+import AppLogin from './pages/login.vue'
 
 Vue.use(VueRouter)
 
@@ -10,6 +12,8 @@ export default new VueRouter({
     base: __dirname,
     routes:[
       {path: '/', name: 'Home', component: AppHome},
-      {path: '/info', name: 'Info', component: AppInfo}
+      {path: '/info', name: 'Info', component: AppInfo},
+      {path: '/signup', name: 'SignUp', component: AppSignup},
+      {path: '/login', name: 'Login', component: AppLogin}
     ]
 })

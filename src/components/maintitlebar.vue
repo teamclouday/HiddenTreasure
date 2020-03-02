@@ -4,8 +4,8 @@
         <img src= "../assets/logo.png" id="title_logo_img" alt="treasure logo">
         <h2 id="title_logo">Hidden Treasure</h2>
         <div id="title_logo_buttons">
-            <button class="title_logo_button" onclick="location.href='login.html'">Login</button>
-            <button class="title_logo_button" onclick="location.href='signup.html'">Signup</button>
+            <router-link class="title_logo_button" to="/login">Login</router-link>
+            <router-link class="title_logo_button" to="/signup">Signup</router-link>
             <router-link class="title_logo_button" to="/info#info_help">Help</router-link>
         </div>
     </div>
