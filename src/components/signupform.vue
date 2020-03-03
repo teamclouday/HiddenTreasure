@@ -1,27 +1,32 @@
 <template>
 <form class="login" style="z-index: 5; position: relative;" name="signup" @submit.prevent>
-<center style="color: rgb(92, 55, 255);"><h3>Sign Up Your Account</h3></center>
-<label for="name"><b>Name</b></label>
-<input v-model.trim="signupForm.name" type="text" placeholder="Enter Your Name" name="name" required>
-<label for="uname"><b>Email</b></label>
-<input v-model.trim="signupForm.email" type="email" placeholder="Enter Your Email" name="ename" required>
-<label for="psw" id="password" v-on:click="togglePassword()"><b>Password</b></label>
-<input v-model.trim="signupForm.password" type="password" placeholder="Enter Password" name="psw" required>
-<!-- <label for="sec"><b>Security Question</b></label>
-<select v-model.trim="signupForm.sec_option" id="security" name="sec_option">
-    <option value="name">Your Best Friend's Name</option>
-    <option value="pet">Your Pet's Name</option>
-    <option value="drive">Last 5 digit of Driver's Liscense</option>
-    <option value="town">Town/City that Your Parents Meet</option>
-</select>
-<input v-model.trim="signupForm.sec" type="text" placeholder="Enter Your Answer" name="sec" required> -->
-<!-- <a id="forget">Forget Your Password?</a> -->
-
-<button id="signupBtn" @click="signup" disabled>Sign Up</button>
-<div id="agree">
-    <input type="checkbox" name="agree" value="agree" id="signupAgree">
-    <label for="agree">Click if you agree with <router-link type="button" to="/info#info_terms">Term of Privacy</router-link></label>
-</div>
+    <transition name="fade">
+        <div v-if="performingRequest" class="loading"></div>
+    </transition>
+    <div v-bind:style="performingRequest ? 'filter: blur(5px);' : 'filter: none;'" >
+        <center style="color: rgb(92, 55, 255);"><h3>Sign Up Your Account</h3></center>
+        <label for="name"><b>Name</b></label>
+        <input v-model.trim="signupForm.name" type="text" placeholder="Enter Your Name" name="name" required>
+        <label for="uname"><b>Email</b></label>
+        <input v-model.trim="signupForm.email" type="email" placeholder="Enter Your Email" name="ename" required>
+        <label for="psw" id="password" v-on:click="togglePassword()"><b>Password</b></label>
+        <input v-model.trim="signupForm.password" type="password" placeholder="Enter Password" name="psw" required>
+        <!-- <label for="sec"><b>Security Question</b></label>
+        <select v-model.trim="signupForm.sec_option" id="security" name="sec_option">
+            <option value="name">Your Best Friend's Name</option>
+            <option value="pet">Your Pet's Name</option>
+            <option value="drive">Last 5 digit of Driver's Liscense</option>
+            <option value="town">Town/City that Your Parents Meet</option>
+        </select>
+        <input v-model.trim="signupForm.sec" type="text" placeholder="Enter Your Answer" name="sec" required> -->
+        <!-- <a id="forget">Forget Your Password?</a> -->
+        
+        <button id="signupBtn" @click="signup" disabled>Sign Up</button>
+        <div id="agree">
+            <input type="checkbox" name="agree" value="agree" id="signupAgree">
+            <label for="agree">Click if you agree with <router-link type="button" to="/info#info_terms">Term of Privacy</router-link></label>
+        </div>
+    </div>
 </form>
 </template>
 
@@ -41,13 +46,16 @@ export default {
             }
         }
     },
+    beforeCreate: function(){
+        this.performingRequest = false
+    },
     methods:{
         signup: function()
         {
             this.performingRequest = true
             fb.auth.createUserWithEmailAndPassword(this.signupForm.email, this.signupForm.password).then(user=>{
-                this.$store.commit('setCurrentUser', user)
-                fb.usersCollection.doc(user.uid).set({
+                this.$store.commit('setCurrentUser', user.user)
+                fb.usersCollection.doc(user.user.uid).set({
                     name: this.signupForm.name
                 }).then(() => {
                     this.$store.dispatch('fetchUserProfile')
@@ -240,5 +248,30 @@ $(document).on("mouseenter mouseleave", "#password", function(e){
     width: 100%;
     height: 20px;
     z-index: 2;
+}
+.loading{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin-top: -80px;
+    margin-left: -80px;
+    border: 30px solid #ff805a;
+    border-top: 30px solid #ffea8f;
+    border-radius: 50%;
+    width: 100px;
+    height: 100px;
+    animation: loadspin 2s linear infinite;
+    -webkit-animation: loadspin 2s linear infinite;
+    z-index: 100;
+}
+@keyframes loadspin {
+  0% { transform: rotate(0deg); }
+  50% { transform: rotate(180deg); }
+  100% { transform: rotate(360deg); }
+}
+@-webkit-keyframes loadspin {
+  0% { -webkit-transform: rotate(0deg); }
+  50% { transform: rotate(180deg); }
+  100% { -webkit-transform: rotate(360deg); }
 }
 </style>

@@ -1,5 +1,9 @@
 <template>
-<form class="login" style="z-index: 5; position: relative;" method="post">
+<form class="login" style="z-index: 5; position: relative;" @submit.prevent>
+    <transition name="fade">
+        <div v-if="performingRequest" class="loading"></div>
+    </transition>
+    <div v-bind:style="performingRequest ? 'filter: blur(5px);' : 'filter: none;'" >
     <center style="color: rgb(92, 55, 255);"><h3>Manage Your Account</h3></center>
     <label for="ename"><b>Email</b></label>
     <input v-model.trim="loginForm.email" type="email" placeholder="Enter Your Email" name="ename" required>
@@ -7,6 +11,7 @@
     <input v-model.trim="loginForm.password" type="password" placeholder="Enter Password" name="psw" required>
     <a id="forget">Forget Your Password?</a>
     <button type="submit" @click="login">Log In</button>
+    </div>
 </form>
 </template>
 
@@ -24,12 +29,15 @@ export default {
             }
         }
     },
+    beforeCreate: function(){
+        this.performingRequest = false
+    },
     methods:{
         login: function()
         {
             this.performingRequest = true
             fb.auth.signInWithEmailAndPassword(this.loginForm.email, this.loginForm.password).then(user=>{
-                this.$store.commit('setCurrentUser', user)
+                this.$store.commit('setCurrentUser', user.user)
                 this.$store.dispatch('fetchUserProfile')
                 this.performingRequest = false
                 this.$router.push('/dashboard')
@@ -134,5 +142,30 @@ export default {
 }
 .login #forget:hover{
     color: rgb(133, 28, 2);
+}
+.loading{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin-top: -80px;
+    margin-left: -80px;
+    border: 30px solid #ff805a;
+    border-top: 30px solid #ffea8f;
+    border-radius: 50%;
+    width: 100px;
+    height: 100px;
+    animation: loadspin 2s linear infinite;
+    -webkit-animation: loadspin 2s linear infinite;
+    z-index: 100;
+}
+@keyframes loadspin {
+  0% { transform: rotate(0deg); }
+  50% { transform: rotate(180deg); }
+  100% { transform: rotate(360deg); }
+}
+@-webkit-keyframes loadspin {
+  0% { -webkit-transform: rotate(0deg); }
+  50% { transform: rotate(180deg); }
+  100% { -webkit-transform: rotate(360deg); }
 }
 </style>

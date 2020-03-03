@@ -4,6 +4,14 @@ const fb = require('./firebaseConfig')
 
 Vue.use(Vuex)
 
+fb.auth.onAuthStateChanged(user => {
+    if(user)
+    {
+        store.commit('setCurrentUser', user)
+        store.dispatch('fetchUserProfile')
+    }
+})
+
 export const store = new Vuex.Store({
     state:{
         currentUser: null,
@@ -16,6 +24,10 @@ export const store = new Vuex.Store({
             }).catch(err => {
                 console.log(err)
             })
+        },
+        clearData({commit}){
+            commit('setCurrentUser', null)
+            commit('setUserProfile', {})
         }
     },
     mutations:{

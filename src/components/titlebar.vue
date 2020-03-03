@@ -3,14 +3,33 @@
     <img src= "../assets/logo.png" id="title_logo_img" alt="treasure logo">
     <h2 id="title_logo">Hidden Treasure</h2>
     <div id="title_logo_buttons">
+        <button v-if="currentUser" class="title_logo_button" @click="logout">Logout</button>
+        <router-link v-if="currentUser" class="title_logo_button" to="/dashboard">Dashboard</router-link>
         <router-link class="title_logo_button" to="/">Home</router-link>
     </div>
 </div>
 </template>
 
 <script>
+import {mapState} from 'vuex'
+const fb = require('../firebaseConfig')
+
 export default {
-    name: "TitleBar"
+    name: "TitleBar",
+    computed:{
+        ...mapState(['currentUser'])
+    },
+    methods:{
+        logout: function()
+        {
+            fb.auth.signOut().then(() => {
+                this.$store.dispatch('clearData')
+                this.$router.push('/')
+            }).catch(err => {
+                console.log(err)
+            })
+        }
+    }
 }
 </script>
 
@@ -67,6 +86,8 @@ export default {
     align-items: center;
     text-decoration: none;
     color: #fff;
+    border-style: none;
+    background-color: transparent;
 }
 
 .title_logo_button:hover

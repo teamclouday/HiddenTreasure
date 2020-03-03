@@ -3,16 +3,17 @@ import 'firebase/firestore'
 
 // firebase init goes here
 const config = {
-    apiKey: "AIzaSyDfAqPNHtw4x-cql76K7Lwaur7xXaKmvjU",
-    authDomain: "cis454hiddentreasure.firebaseapp.com",
-    databaseURL: "https://cis454hiddentreasure.firebaseio.com",
-    projectId: "cis454hiddentreasure",
-    storageBucket: "cis454hiddentreasure.appspot.com",
-    messagingSenderId: "808239440826",
-    appId: "1:808239440826:web:e0f2b08ab6d2d1128e7383",
-    measurementId: "G-JZV0MMBP55"
+    apiKey: "AIzaSyBoVUvlWqzgv0HLUWQXem9ByF44gjsKEk0",
+    authDomain: "cis454finalproject.firebaseapp.com",
+    databaseURL: "https://cis454finalproject.firebaseio.com",
+    projectId: "cis454finalproject",
+    storageBucket: "cis454finalproject.appspot.com",
+    messagingSenderId: "151765129580",
+    appId: "1:151765129580:web:7f873db2d49fa6ff037b49",
+    measurementId: "G-MCN0H88F6E"
 }
 firebase.initializeApp(config)
+firebase.analytics()
 
 // firebase utils
 const db = firebase.firestore()
