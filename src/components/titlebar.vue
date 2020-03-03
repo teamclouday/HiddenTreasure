@@ -24,7 +24,7 @@ export default {
         {
             fb.auth.signOut().then(() => {
                 this.$store.dispatch('clearData')
-                this.$router.push('/')
+                this.$router.push('/').catch(() => {})
             }).catch(err => {
                 console.log(err)
             })

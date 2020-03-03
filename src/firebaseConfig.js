@@ -1,5 +1,7 @@
-import firebase from 'firebase'
+import firebase from 'firebase/app'
+import 'firebase/auth'
 import 'firebase/firestore'
+import 'firebase/analytics'
 
 // firebase init goes here
 const config = {

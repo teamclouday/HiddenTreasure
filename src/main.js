@@ -5,6 +5,7 @@ import {store} from './store'
 const fb = require('./firebaseConfig')
 
 Vue.config.productionTip = false
+Vue.config.devtools = false
 
 let app
 fb.auth.onAuthStateChanged(() => {
@@ -14,7 +15,11 @@ fb.auth.onAuthStateChanged(() => {
       el: '#app',
       router,
       store,
-      render: h => h(App)
+      render: h => h(App),
+      created(){
+        console.log('CIS454 Hidden Treasure Final Project (Group 4)')
+        console.log('Thank you for visiting')
+      }
     })
   }
 })
