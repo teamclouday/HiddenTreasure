@@ -1,34 +1,78 @@
 <template>
-<form class="login" style="z-index: 5; position: relative;" name="signup">
+<form class="login" style="z-index: 5; position: relative;" name="signup" @submit.prevent>
 <center style="color: rgb(92, 55, 255);"><h3>Sign Up Your Account</h3></center>
-<label for="uname"><b>Username</b></label>
-<input type="text" placeholder="Enter Username" name="uname" required>
-<label for="psw"><b>Password</b></label>
-<input type="password" placeholder="Enter Password" name="psw" required>
-<label for="sec"><b>Security Question</b></label>
-<select id="security" name="sec_option">
+<label for="name"><b>Name</b></label>
+<input v-model.trim="signupForm.name" type="text" placeholder="Enter Your Name" name="name" required>
+<label for="uname"><b>Email</b></label>
+<input v-model.trim="signupForm.email" type="email" placeholder="Enter Your Email" name="ename" required>
+<label for="psw" id="password" v-on:click="togglePassword()"><b>Password</b></label>
+<input v-model.trim="signupForm.password" type="password" placeholder="Enter Password" name="psw" required>
+<!-- <label for="sec"><b>Security Question</b></label>
+<select v-model.trim="signupForm.sec_option" id="security" name="sec_option">
     <option value="name">Your Best Friend's Name</option>
     <option value="pet">Your Pet's Name</option>
     <option value="drive">Last 5 digit of Driver's Liscense</option>
     <option value="town">Town/City that Your Parents Meet</option>
 </select>
-<input type="text" placeholder="Enter Your Answer" name="sec" required>
+<input v-model.trim="signupForm.sec" type="text" placeholder="Enter Your Answer" name="sec" required> -->
 <!-- <a id="forget">Forget Your Password?</a> -->
 
-<input type="submit" id="signupBtn" name="submit" value="Sign Up" onclick="" disabled>
+<button id="signupBtn" @click="signup" disabled>Sign Up</button>
 <div id="agree">
     <input type="checkbox" name="agree" value="agree" id="signupAgree">
-    <label for="agree">Click if you agree with <a href="info.html#info_terms">Term of Privacy</a></label>
+    <label for="agree">Click if you agree with <router-link type="button" to="/info#info_terms">Term of Privacy</router-link></label>
 </div>
 </form>
 </template>
 
 <script>
-import axios from 'axios'
+// import axios from 'axios'
 var $ = require('jquery')
+const fb = require('../firebaseConfig')
 
 export default {
-    name: "SignupForm"
+    name: "SignupForm",
+    data(){
+        return{
+            signupForm:{
+                email: '',
+                password: '',
+                name: ''
+            }
+        }
+    },
+    methods:{
+        signup: function()
+        {
+            this.performingRequest = true
+            fb.auth.createUserWithEmailAndPassword(this.signupForm.email, this.signupForm.password).then(user=>{
+                this.$store.commit('setCurrentUser', user)
+                fb.usersCollection.doc(user.uid).set({
+                    name: this.signupForm.name
+                }).then(() => {
+                    this.$store.dispatch('fetchUserProfile')
+                    this.performingRequest = false
+                    this.$router.push('/dashboard')
+                }).catch(err => {
+                    console.log(err)
+                    this.performingRequest = false
+                })
+            }).catch(err => {
+                console.log(err)
+            })
+        },
+        togglePassword: function()
+        {
+            if($('input[name="psw"]').prop('type') == 'password')
+            {
+                $('input[name="psw"]').attr('type', 'text')
+            }
+            else
+            {
+                $('input[name="psw"]').attr('type', 'password')
+            }
+        }
+    }
 }
 
 // set event listener for checkbox
@@ -41,19 +85,51 @@ $(document).on('change', 'input[name="agree"]', function(){
     }
 })
 
-// set event listener for submit button
-$(document).on('click', 'input[name="submit"]', function(){
-    var data = {
-        "uname": $('input[name="uname"]').val(),
-        "psw": $('input[name="psw"]').val(),
-        "sec": $('input[name="sec"]').val(),
-        "sec_option": $('input[name="sec_option"]:selected').val()
+$(document).on("mouseenter mouseleave", "#password", function(e){
+    if(e.type == "mouseenter")
+    {
+        if($('input[name="psw"]').prop('type') == 'password')
+        {
+            $('#password').html("<b>Show Password</b>")
+        }
+        else
+        {
+            $('#password').html("<b>Hide Password</b>")
+        }
     }
-    console.log(data)
-    axios.post('../backend/signup.php', data).then(
-        res => console.log(res.request.response)
-    )
+    else
+    {
+        $('#password').html("<b>Password</b>")
+    }
 })
+
+// $(document).ready(function(){
+//     $('#password').hover(function(){
+//         console.log('ready')
+//         if($('input[name="psw"]').prop('type') == 'password')
+//         {
+//             $('#password').html("<b>Show Password</b>")
+//         }
+//         else
+//         {
+//             $('#password').html("<b>Hide Password</b>")
+//         }
+//     },
+//     function(){
+//         $('#password').html("<b>Password</b>")
+//     })
+
+//     $('#password').click(function(){
+//         if($('input[name="psw"]').prop('type') == 'password')
+//         {
+//             $('input[name="psw"]').attr('type', 'text')
+//         }
+//         else
+//         {
+//             $('input[name="psw"]').attr('type', 'password')
+//         }
+//     })
+// })
 
 </script>
 

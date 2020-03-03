@@ -1,19 +1,57 @@
 <template>
 <form class="login" style="z-index: 5; position: relative;" method="post">
     <center style="color: rgb(92, 55, 255);"><h3>Manage Your Account</h3></center>
-    <label for="uname"><b>Username</b></label>
-    <input type="text" placeholder="Enter Username" name="uname" required>
-    <label for="psw"><b>Password</b></label>
-    <input type="password" placeholder="Enter Password" name="psw" required>
+    <label for="ename"><b>Email</b></label>
+    <input v-model.trim="loginForm.email" type="email" placeholder="Enter Your Email" name="ename" required>
+    <label for="psw" id="password" v-on:click="togglePassword()"><b>Password</b></label>
+    <input v-model.trim="loginForm.password" type="password" placeholder="Enter Password" name="psw" required>
     <a id="forget">Forget Your Password?</a>
-    <button type="submit">Log In</button>
+    <button type="submit" @click="login">Log In</button>
 </form>
 </template>
 
 <script>
+var $ = require('jquery')
+const fb = require('../firebaseConfig')
+
 export default {
-    name: "LoginForm"
+    name: "LoginForm",
+    data(){
+        return{
+            loginForm:{
+                email: '',
+                password: ''
+            }
+        }
+    },
+    methods:{
+        login: function()
+        {
+            this.performingRequest = true
+            fb.auth.signInWithEmailAndPassword(this.loginForm.email, this.loginForm.password).then(user=>{
+                this.$store.commit('setCurrentUser', user)
+                this.$store.dispatch('fetchUserProfile')
+                this.performingRequest = false
+                this.$router.push('/dashboard')
+            }).catch(err => {
+                console.log(err)
+                this.performingRequest = false
+            })
+        },
+        togglePassword: function()
+        {
+            if($('input[name="psw"]').prop('type') == 'password')
+            {
+                $('input[name="psw"]').attr('type', 'text')
+            }
+            else
+            {
+                $('input[name="psw"]').attr('type', 'password')
+            }
+        }
+    }
 }
+
 </script>
 
 <style scoped>

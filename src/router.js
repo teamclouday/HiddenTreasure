@@ -1,21 +1,43 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import VueHeadful from 'vue-headful'
+import firebase from 'firebase'
 import AppHome from './pages/mainpage.vue'
 import AppInfo from './pages/infopage.vue'
 import AppSignup from './pages/signup.vue'
 import AppLogin from './pages/login.vue'
+import AppDashboard from './pages/dashboard.vue'
 
 Vue.component('vue-headful', VueHeadful)
 Vue.use(VueRouter)
 
-export default new VueRouter({
+const router = new VueRouter({
     mode: 'history',
     base: __dirname,
     routes:[
       {path: '/', name: 'Home', component: AppHome},
       {path: '/info', name: 'Info', component: AppInfo},
       {path: '/signup', name: 'SignUp', component: AppSignup},
-      {path: '/login', name: 'Login', component: AppLogin}
+      {path: '/login', name: 'Login', component: AppLogin},
+      {path: '/dashboard', name: 'Dashboard', component: AppDashboard, meta:{requiresAuth: true}}
     ]
 })
+
+router.beforeEach((to, from, next) => {
+  const requiresAuth = to.matched.some(x => x.meta.requiresAuth)
+  const currentUser = firebase.auth().currentUser
+
+  if(requiresAuth && !currentUser)
+  {
+    next('/login')
+  } else if(requiresAuth && currentUser)
+  {
+    next()
+  }
+  else
+  {
+    next()
+  }
+})
+
+export default router
