@@ -3,24 +3,32 @@
 A website project for CIS454  
 The website is currently live [here](http://hidden-treasure.online/)  
 
-------
+------  
 
-## Project setup
+### Frontend  
+
+For the frontend, we use [Vue.js](https://vuejs.org/)  
+
+### Backend  
+
+For the backend, we use [Firebase.js](https://firebase.google.com/)  
+
+------  
+
+Install the project:  
 ```
 npm install
 ```
 
-### Compiles and hot-reloads for development
+Host the project locally (vue.js):  
 ```
 npm run serve
 ```
-
-### Compiles and minifies for production
+Host the project locally (Firebase.js) (Need firebase-tools installed):  
+```
+firebase serve
+```
+Build the project:  
 ```
 npm run build
-```
-
-### Lints and fixes files
-```
-npm run lint
 ```
