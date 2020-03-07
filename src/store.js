@@ -4,7 +4,7 @@ const fb = require('./firebaseConfig')
 
 Vue.use(Vuex)
 
-fb.auth.onAuthStateChanged(user => {
+fb.auth().onAuthStateChanged(user => {
     if(user)
     {
         store.commit('setCurrentUser', user)

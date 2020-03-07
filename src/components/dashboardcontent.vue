@@ -14,16 +14,25 @@
             <v-tab title="Profile" class="content_inside">
                 <div v-if="!currentUser.emailVerified" id="verify">You have not verified your email yet!</div>
                 <img id="avatar" src="" alt="avatar" width="150px" height="150px" @click="updateAvatar"/>
-                <div id="name">{{userProfile.name}}</div>
-                <label for="bio" id="bio_label" @mouseover="toggleBioLabel" @mouseleave="toggleBioLabel" @click="updateUserBio">Bio</label>
+                <input id="name" v-model="userProfile.name"/>
+                <label for="bio" id="bio_label">Bio</label>
                 <textarea name="bio" rows="2" maxlength="100" placeholder="Enter Your Bio Here" wrap="soft" autocomplete="on" id="bio_text" v-on:keydown.enter="limitBioRows" v-model="userProfile.bio"></textarea>
-                <!-- <button id="bio_update">Update</button> -->
+                <button id="bio_update" @click="updateUserBio">Update Profile</button>
             </v-tab>
-            <v-tab title="History" class="content_inside">
+            <v-tab title="Community" class="content_inside">
                 Nothing here yet
             </v-tab>
             <v-tab title="Security" class="content_inside">
-                change password? delete account?
+                <form class="reset" name="resetForm" @submit.prevent>
+                <label id="reset_label">Update Password</label>
+                <input type="password" class="reset_psw" id="psw1" placeholder="Enter Old Password" required>
+                <input type="password" class="reset_psw" id="psw2" placeholder="Enter New Password" required>
+                <button id="reset_btn" @click="updatePassword">Update</button>
+                </form>
+                <div id="reset_or">Or</div>
+                <button id="reset_btn" @click="resetPassword">Send Reset Email</button>
+                <hr style="margin-top: 50px;margin-bottom: 50px;"/>
+                <button id="reset_destroy" @click="destroyUser">Destroy Account</button>
             </v-tab>
         </vue-tabs>
     </div>
@@ -109,14 +118,117 @@ export default {
             }
             this.$refs.simplert.openSimplert(obj)
         },
-        toggleBioLabel: function()
-        {
-            document.getElementById("bio_label").innerText = (document.getElementById("bio_label").innerText == "Bio") ? "Update Bio" : "Bio"
-        },
         updateUserBio: function()
         {
             this.$store.commit('setUserBio', document.getElementById("bio_text").value)
             this.updateUserProfile()
+        },
+        resetPassword: function()
+        {
+            fb.auth().sendPasswordResetEmail(this.currentUser.email).then(() => {
+                let ref = this
+                let obj = {
+                    title: 'Reset Link Sent',
+                    message: "Reset link has been sent to your email address",
+                    type: 'success',
+                    customCloseBtnText: 'OK',
+                    onClose: function(){
+                        fb.auth().signOut().then(() => {
+                            ref.$store.dispatch('clearData')
+                            ref.$router.push('/').catch(() => {})
+                        }).catch(err => {
+                            console.log(err)
+                        })
+                    },
+                    showXclose: true
+                }
+                this.$refs.simplert.openSimplert(obj)
+            }).catch(err => {
+                this.popupError(err.message)
+            })
+        },
+        updatePassword: function()
+        {
+            fb.auth().currentUser.reauthenticateWithCredential(
+                fb.auth.EmailAuthProvider.credential(
+                    this.currentUser.email,
+                    document.getElementById("psw1").value
+                )
+            ).then(() => {
+                this.currentUser.updatePassword(document.getElementById("psw2").value).then(() => {
+                    let ref = this
+                    let obj = {
+                        title: 'Password Updated',
+                        message: "Your password has been updated successfully",
+                        type: 'success',
+                        customCloseBtnText: 'OK',
+                        onClose: function(){
+                            fb.auth().signOut().then(() => {
+                                ref.$store.dispatch('clearData')
+                                ref.$router.push('/').catch(() => {})
+                            }).catch(err => {
+                                console.log(err)
+                            })
+                        },
+                        showXclose: true
+                    }
+                    this.$refs.simplert.openSimplert(obj)
+                }).catch(err => {
+                    this.popupError(err.message)
+                })
+            }).catch(err => {
+                this.popupError(err.message)
+            })
+        },
+        destroyUser: function()
+        {
+            let ref = this
+            let obj = {
+                title: 'Delete Account?',
+                message: "Are you sure to delete your account?",
+                type: 'error',
+                useConfirmBtn: true,
+                customCloseBtnText: 'Cancel',
+                customConfirmBtnText: 'OK',
+                onConfirm: function(){
+                    ref.destroyUserConfirm()
+                },
+                onClose: function(){
+                    window.location.reload()
+                },
+                showXclose: true
+            }
+            this.$refs.simplert.openSimplert(obj)
+        },
+        destroyUserConfirm: function()
+        {
+            console.log("here")
+            let uid = this.currentUser.uid
+            fb.usersCollection.doc(uid).delete().then(() => {
+                this.currentUser.delete().then(() => {
+                    let ref = this
+                    let obj = {
+                        title: 'Account Deleted',
+                        message: "Your account has been successfully deleted",
+                        type: 'success',
+                        customCloseBtnText: 'OK',
+                        onClose: function(){
+                            fb.auth().signOut().then(() => {
+                                ref.$store.dispatch('clearData')
+                                ref.$router.push('/').catch(() => {})
+                            }).catch(err => {
+                                console.log(err)
+                            })
+                        },
+                        showXclose: true
+                    }
+                    this.$refs.simplert.openSimplert(obj)
+                }).catch(err => {
+                    this.popupError(err.message)
+                })
+            }).catch(err => {
+                this.popupError(err.message)
+            })
         }
     },
     mounted: function(){
@@ -175,18 +287,19 @@ export default {
     display: block;
     image-rendering: pixelated;
     border-style: solid;
-    border-radius: 5px;
+    border-radius: 10px;
     border-color: rgb(92, 24, 24);
     border-width: 2px;
-    margin-top: 10px;
+    margin-top: 10%;
     margin-left: auto;
     margin-right: auto;
     width: 150px;
+    cursor: pointer;
+    transition-duration: 0.2s;
 }
 #avatar:hover
 {
-    border-width: 10px;
-    cursor: pointer;
+    border-radius: 30%;
 }
 #name
 {
@@ -198,6 +311,9 @@ export default {
     font-size: 30px;
     font-family: Verdana, Geneva, Tahoma, sans-serif;
     display: block;
+    background: transparent;
+    border: none;
+    outline: none;
 }
 #bio_label
 {
@@ -206,11 +322,6 @@ export default {
     margin-top: 50px;
     margin-left: auto;
     margin-right: auto;
-}
-#bio_label:hover{
-    cursor: pointer;
-    color: rgb(136, 51, 30);
-    font-weight: bold;
 }
 #bio_text
 {
@@ -223,20 +334,102 @@ export default {
     font-size: 20px;
     outline: none;
     border-radius: 10px;
+    padding: 5px;
 }
-/* #bio_update{
+#bio_update{
     display: block;
     position: relative;
-    height: 30px;
-    width: 90px;
-    font-size: 15px;
-    margin-top: 10px;
-    margin-right: 10%;
+    height: 40px;
+    width: 200px;
+    font-size: 18px;
+    margin-top: 40px;
+    margin-right: auto;
     margin-left: auto;
     border-radius: 5px;
+    border-style: solid;
+    border-width: 1px;
+    border-color: black;
     outline: none;
     cursor: pointer;
-} */
+}
+#bio_update:hover{
+    box-shadow: 2px 2px;
+}
+.reset{
+    width: 80%;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 8%;
+}
+#reset_label{
+    display: block;
+    width: 50%;
+    text-align: center;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 20px;
+    font-size: 30px;
+}
+.reset_psw{
+    display: block;
+    width: 400px;
+    height: 40px;
+    margin-bottom: 20px;
+    margin-left: auto;
+    margin-right: auto;
+    border-radius: 5px;
+    outline: none;
+    font-size: 20px;
+    padding-left: 10px;
+    padding-right: 10px;
+}
+#reset_btn{
+    display: block;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    margin-left: auto;
+    margin-right: auto;
+    width: 200px;
+    height: 35px;
+    border-radius: 5px;
+    font-size: 20px;
+    outline: none;
+    cursor: pointer;
+}
+#reset_or{
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 80%;
+    text-align: center;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    font-size: 20px;
+}
+#reset_destroy{
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 300px;
+    height: 80px;
+    border-radius: 20px;
+    border-style: solid;
+    border-color: rgb(112, 22, 22);
+    border-width: 4px;
+    font-size: 30px;
+    font-weight: bold;
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    background-color: rgb(206, 52, 52);
+    color: aliceblue;
+    cursor: pointer;
+    transition-duration: 0.2s;
+    outline: none;
+}
+#reset_destroy:hover{
+    background-color: rgb(255, 175, 175);
+    color: rgb(0, 0, 0);
+    font-size: 35px;
+}
 </style>
 
 <style>

@@ -15,6 +15,10 @@
     <input v-model.trim="loginForm.password" type="password" placeholder="Enter Password" name="psw" required>
     <a id="forget" @click="resetPassword">Forget Your Password?</a>
     <button type="submit" @click="login">Log In</button>
+    <div id="remember">
+        <label for="remember">Remember Me</label>
+        <input type="checkbox" name="remember" value="remember" id="loginRemember">
+    </div>
     </div>
 </form>
 </template>
@@ -47,14 +51,23 @@ export default {
         login: function()
         {
             this.performingRequest = true
-            fb.auth.signInWithEmailAndPassword(this.loginForm.email, this.loginForm.password).then(user=>{
-                this.$store.commit('setCurrentUser', user.user)
-                this.$store.dispatch('fetchUserProfile')
-                this.performingRequest = false
-                this.$router.push('/dashboard')
+            let persistence = fb.auth.Auth.Persistence.SESSION
+            if(document.getElementById("loginRemember").checked)
+            {
+                persistence = fb.auth.Auth.Persistence.LOCAL
+            }
+            fb.auth().setPersistence(persistence).then(() => {
+                fb.auth().signInWithEmailAndPassword(this.loginForm.email, this.loginForm.password).then(user=>{
+                    this.$store.commit('setCurrentUser', user.user)
+                    this.$store.dispatch('fetchUserProfile')
+                    this.performingRequest = false
+                    this.$router.push('/dashboard')
+                }).catch(err => {
+                    this.popupError(err.message)
+                    this.performingRequest = false
+                })
             }).catch(err => {
                 this.popupError(err.message)
-                console.log(err)
                 this.performingRequest = false
             })
         },
@@ -88,9 +101,9 @@ export default {
             var email = window.prompt("Please enter the email you want to reset")
             if(email == null)
             {
-                window.location.reload()
+                return
             }
-            fb.auth.sendPasswordResetEmail(email).then(() => {
+            fb.auth().sendPasswordResetEmail(email).then(() => {
                 let obj = {
                     title: 'Reset Link Sent',
                     message: "Reset link has been sent to your email address",
@@ -104,7 +117,6 @@ export default {
                 this.$refs.simplert.openSimplert(obj)
             }).catch(err => {
                 this.popupError(err.message)
-                console.log(err)
             })
         }
     },
@@ -220,5 +232,36 @@ export default {
   0% { -webkit-transform: rotate(0deg); }
   50% { transform: rotate(180deg); }
   100% { -webkit-transform: rotate(360deg); }
+}
+#remember{
+    display: block;
+    position: relative;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 20px;
+    height: 30px;
+    width: 55%;
+    overflow: hidden;
+}
+#remember input{
+    position: absolute;
+    height: 20px;
+    margin:0;
+    width: 10%;
+    top: 5px;
+    cursor: pointer;
+    z-index: 4;
+    right: 0;
+}
+#remember label{
+    position: absolute;
+    margin: 0;
+    top: 8px;
+    text-align: right;
+    font-size: 15px;
+    font-family: 'Times New Roman', Times, serif;
+    width: 85%;
+    height: 20px;
+    z-index: 2;
 }
 </style>

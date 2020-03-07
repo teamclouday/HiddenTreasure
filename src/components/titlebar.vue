@@ -4,7 +4,7 @@
     <h2 id="title_logo">Hidden Treasure</h2>
     <div id="title_logo_buttons">
         <button v-if="currentUser" class="title_logo_button" @click="logout">Logout</button>
-        <router-link v-if="currentUser" class="title_logo_button" to="/dashboard">Dashboard</router-link>
+        <router-link v-if="currentUser && showDashBoard" class="title_logo_button" to="/dashboard">Dashboard</router-link>
         <router-link class="title_logo_button" to="/">Home</router-link>
     </div>
 </div>
@@ -17,12 +17,18 @@ const fb = require('../firebaseConfig')
 export default {
     name: "TitleBar",
     computed:{
-        ...mapState(['currentUser'])
+        ...mapState(['currentUser']),
+        showDashBoard(){
+            if(this.$router.currentRoute.path != '/dashboard')
+                return true
+            else
+                return false
+        }
     },
     methods:{
         logout: function()
         {
-            fb.auth.signOut().then(() => {
+            fb.auth().signOut().then(() => {
                 this.$store.dispatch('clearData')
                 this.$router.push('/').catch(() => {})
             }).catch(err => {

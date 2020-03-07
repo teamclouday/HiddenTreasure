@@ -60,38 +60,41 @@ export default {
         signup: function()
         {
             this.performingRequest = true
-            fb.auth.createUserWithEmailAndPassword(this.signupForm.email, this.signupForm.password).then(user=>{
-                this.$store.commit('setCurrentUser', user.user)
-                fb.usersCollection.doc(user.user.uid).set({
-                    name: this.signupForm.name,
-                    avatar: this.randomAvatar()
-                }).then(() => {
-                    this.$store.dispatch('fetchUserProfile')
-                    this.performingRequest = false
-                    user.user.sendEmailVerification().then(()=>{
-                        let obj = {
-                            title: 'Verification Email Sent',
-                            message: "A verification email has been sent to your email",
-                            type: 'success',
-                            customCloseBtnText: 'OK',
-                            onClose: function(){
-                                this.$router.push('/dashboard')
-                            },
-                            showXclose: true
-                        }
-                        this.$refs.simplert.openSimplert(obj)
+            fb.auth().setPersistence(fb.auth.Auth.Persistence.SESSION).then(() => {
+                fb.auth().createUserWithEmailAndPassword(this.signupForm.email, this.signupForm.password).then(user=>{
+                    this.$store.commit('setCurrentUser', user.user)
+                    fb.usersCollection.doc(user.user.uid).set({
+                        name: this.signupForm.name,
+                        avatar: this.randomAvatar(),
+                        bio: ""
+                    }).then(() => {
+                        this.$store.dispatch('fetchUserProfile')
+                        this.performingRequest = false
+                        user.user.sendEmailVerification().then(()=>{
+                            let obj = {
+                                title: 'Verification Email Sent',
+                                message: "A verification email has been sent to your email",
+                                type: 'success',
+                                customCloseBtnText: 'OK',
+                                onClose: function(){
+                                    this.$router.push('/dashboard')
+                                },
+                                showXclose: true
+                            }
+                            this.$refs.simplert.openSimplert(obj)
+                        }).catch(err => {
+                            this.popupError(err.message)
+                        })
                     }).catch(err => {
                         this.popupError(err.message)
-                        console.log(err)
+                        this.performingRequest = false
                     })
                 }).catch(err => {
                     this.popupError(err.message)
-                    console.log(err)
                     this.performingRequest = false
                 })
             }).catch(err => {
                 this.popupError(err.message)
-                console.log(err)
                 this.performingRequest = false
             })
         },

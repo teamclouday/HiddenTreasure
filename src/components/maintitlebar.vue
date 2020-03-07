@@ -44,7 +44,7 @@ export default {
     methods:{
         logout: function()
         {
-            fb.auth.signOut().then(() => {
+            fb.auth().signOut().then(() => {
                 this.$store.dispatch('clearData')
                 this.$router.push('/').catch(() => {})
             }).catch(err => {

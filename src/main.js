@@ -14,7 +14,7 @@ Vue.component('vue-headful', VueHeadful)
 Vue.use(VueTabs)
 
 let app
-fb.auth.onAuthStateChanged(() => {
+fb.auth().onAuthStateChanged(() => {
   if(!app)
   {
     app = new Vue({
