@@ -3,6 +3,10 @@
     <transition name="fade">
         <div v-if="performingRequest" class="loading"></div>
     </transition>
+    <Simplert :useRadius="true"
+      :useIcon="true"
+      ref="simplert">
+    </Simplert>
     <div v-bind:style="performingRequest ? 'filter: blur(5px);' : 'filter: none;'" >
         <center style="color: rgb(92, 55, 255);"><h3>Sign Up Your Account</h3></center>
         <label for="name"><b>Name</b></label>
@@ -34,6 +38,8 @@
 // import axios from 'axios'
 var $ = require('jquery')
 const fb = require('../firebaseConfig')
+import Simplert from 'vue2-simplert/src/Simplert'
+require('vue2-simplert/dist/simplert.css')
 
 export default {
     name: "SignupForm",
@@ -43,7 +49,8 @@ export default {
                 email: '',
                 password: '',
                 name: ''
-            }
+            },
+            performingRequest: false
         }
     },
     beforeCreate: function(){
@@ -60,13 +67,31 @@ export default {
                 }).then(() => {
                     this.$store.dispatch('fetchUserProfile')
                     this.performingRequest = false
-                    this.$router.push('/dashboard')
+                    user.user.sendEmailVerification().then(()=>{
+                        let obj = {
+                            title: 'Verification Email Sent',
+                            message: "A verification email has been sent to your email",
+                            type: 'success',
+                            customCloseBtnText: 'OK',
+                            onClose: function(){
+                                this.$router.push('/dashboard')
+                            },
+                            showXclose: true
+                        }
+                        this.$refs.simplert.openSimplert(obj)
+                    }).catch(err => {
+                        this.popupError(err.message)
+                        console.log(err)
+                    })
                 }).catch(err => {
+                    this.popupError(err.message)
                     console.log(err)
                     this.performingRequest = false
                 })
             }).catch(err => {
+                this.popupError(err.message)
                 console.log(err)
+                this.performingRequest = false
             })
         },
         togglePassword: function()
@@ -79,7 +104,24 @@ export default {
             {
                 $('input[name="psw"]').attr('type', 'password')
             }
+        },
+        popupError: function(msg)
+        {
+            let obj = {
+                title: 'Error',
+                message: msg,
+                type: 'error',
+                customCloseBtnText: 'OK',
+                onClose: function(){
+                    window.location.reload()
+                },
+                showXclose: true
+            }
+            this.$refs.simplert.openSimplert(obj)
         }
+    },
+    components:{
+        Simplert
     }
 }
 

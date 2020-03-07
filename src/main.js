@@ -15,11 +15,7 @@ fb.auth.onAuthStateChanged(() => {
       el: '#app',
       router,
       store,
-      render: h => h(App),
-      created(){
-        console.log('CIS454 Hidden Treasure Final Project (Group 4)')
-        console.log('Thank you for visiting')
-      }
+      render: h => h(App)
     })
   }
 })

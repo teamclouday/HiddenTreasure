@@ -3,13 +3,17 @@
     <transition name="fade">
         <div v-if="performingRequest" class="loading"></div>
     </transition>
+    <Simplert :useRadius="true"
+      :useIcon="true"
+      ref="simplert">
+    </Simplert>
     <div v-bind:style="performingRequest ? 'filter: blur(5px);' : 'filter: none;'" >
     <center style="color: rgb(92, 55, 255);"><h3>Manage Your Account</h3></center>
     <label for="ename"><b>Email</b></label>
     <input v-model.trim="loginForm.email" type="email" placeholder="Enter Your Email" name="ename" required>
     <label for="psw" id="password" v-on:click="togglePassword()"><b>Password</b></label>
     <input v-model.trim="loginForm.password" type="password" placeholder="Enter Password" name="psw" required>
-    <a id="forget">Forget Your Password?</a>
+    <a id="forget" @click="resetPassword">Forget Your Password?</a>
     <button type="submit" @click="login">Log In</button>
     </div>
 </form>
@@ -18,6 +22,8 @@
 <script>
 var $ = require('jquery')
 const fb = require('../firebaseConfig')
+import Simplert from 'vue2-simplert/src/Simplert'
+require('vue2-simplert/dist/simplert.css')
 
 export default {
     name: "LoginForm",
@@ -26,6 +32,11 @@ export default {
             loginForm:{
                 email: '',
                 password: ''
+            },
+            performingRequest: false,
+            resetPasswordSetting: {
+                url: '/login',
+                handleCodeInApp: true
             }
         }
     },
@@ -42,6 +53,7 @@ export default {
                 this.performingRequest = false
                 this.$router.push('/dashboard')
             }).catch(err => {
+                this.popupError(err.message)
                 console.log(err)
                 this.performingRequest = false
             })
@@ -56,7 +68,44 @@ export default {
             {
                 $('input[name="psw"]').attr('type', 'password')
             }
+        },
+        popupError: function(msg)
+        {
+            let obj = {
+                title: 'Error',
+                message: msg,
+                type: 'error',
+                customCloseBtnText: 'OK',
+                onClose: function(){
+                    window.location.reload()
+                },
+                showXclose: true
+            }
+            this.$refs.simplert.openSimplert(obj)
+        },
+        resetPassword: function()
+        {
+            var email = window.prompt("Please enter the email you want to reset")
+            fb.auth.sendPasswordResetEmail(email).then(() => {
+                let obj = {
+                    title: 'Reset Link Sent',
+                    message: "Reset link has been sent to your email address",
+                    type: 'success',
+                    customCloseBtnText: 'OK',
+                    onClose: function(){
+                        window.location.reload()
+                    },
+                    showXclose: true
+                }
+                this.$refs.simplert.openSimplert(obj)
+            }).catch(err => {
+                this.popupError(err.message)
+                console.log(err)
+            })
         }
+    },
+    components:{
+        Simplert
     }
 }
 

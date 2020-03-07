@@ -14,6 +14,7 @@
     "vue": "^2.6.11",
     "vue-headful": "^2.1.0",
     "vue-router": "^3.1.6",
+    "vue2-simplert": "^1.0.0",
     "vuex": "^3.1.2"
   },
   "devDependencies": {
