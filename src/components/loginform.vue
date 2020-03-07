@@ -86,6 +86,10 @@ export default {
         resetPassword: function()
         {
             var email = window.prompt("Please enter the email you want to reset")
+            if(email == null)
+            {
+                window.location.reload()
+            }
             fb.auth.sendPasswordResetEmail(email).then(() => {
                 let obj = {
                     title: 'Reset Link Sent',

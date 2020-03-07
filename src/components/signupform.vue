@@ -63,7 +63,8 @@ export default {
             fb.auth.createUserWithEmailAndPassword(this.signupForm.email, this.signupForm.password).then(user=>{
                 this.$store.commit('setCurrentUser', user.user)
                 fb.usersCollection.doc(user.user.uid).set({
-                    name: this.signupForm.name
+                    name: this.signupForm.name,
+                    avatar: this.randomAvatar()
                 }).then(() => {
                     this.$store.dispatch('fetchUserProfile')
                     this.performingRequest = false
@@ -118,6 +119,16 @@ export default {
                 showXclose: true
             }
             this.$refs.simplert.openSimplert(obj)
+        },
+        randomAvatar: function()
+        {
+            var canvas = document.createElement("canvas")
+            canvas.width = 3
+            canvas.height = 3
+            var imageData = new ImageData(3, 3)
+            imageData.data.set(imageData.data.map(() => Math.floor(Math.random()*256)))
+            canvas.getContext("2d").putImageData(imageData, 0, 0)
+            return canvas.toDataURL()
         }
     },
     components:{

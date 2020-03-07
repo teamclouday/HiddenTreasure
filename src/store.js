@@ -38,6 +38,18 @@ export const store = new Vuex.Store({
         setUserProfile(state, val)
         {
             state.userProfile = val
+        },
+        setUserAvatar(state, val)
+        {
+            state.userProfile.avatar = val
+        },
+        setUserName(state, val)
+        {
+            state.userProfile.name = val
+        },
+        setUserBio(state, val)
+        {
+            state.userProfile.bio = val
         }
     }
 })

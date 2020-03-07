@@ -1,6 +1,5 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import VueHeadful from 'vue-headful'
 import firebase from 'firebase/app'
 import AppHome from './pages/mainpage.vue'
 import AppInfo from './pages/infopage.vue'
@@ -8,7 +7,6 @@ import AppSignup from './pages/signup.vue'
 import AppLogin from './pages/login.vue'
 import AppDashboard from './pages/dashboard.vue'
 
-Vue.component('vue-headful', VueHeadful)
 Vue.use(VueRouter)
 
 const router = new VueRouter({
