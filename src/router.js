@@ -1,11 +1,11 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import firebase from 'firebase/app'
-import AppHome from './pages/mainpage.vue'
-import AppInfo from './pages/infopage.vue'
-import AppSignup from './pages/signup.vue'
-import AppLogin from './pages/login.vue'
-import AppDashboard from './pages/dashboard.vue'
+import AppHome from '@/pages/mainpage.vue'
+import AppInfo from '@/pages/infopage.vue'
+import AppSignup from '@/pages/signup.vue'
+import AppLogin from '@/pages/login.vue'
+import AppDashboard from '@/pages/dashboard.vue'
 
 Vue.use(VueRouter)
 

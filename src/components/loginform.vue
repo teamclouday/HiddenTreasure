@@ -25,7 +25,7 @@
 
 <script>
 var $ = require('jquery')
-const fb = require('../firebaseConfig')
+const fb = require('@/firebaseConfig')
 import Simplert from 'vue2-simplert/src/Simplert'
 require('vue2-simplert/dist/simplert.css')
 

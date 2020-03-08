@@ -10,9 +10,9 @@
 </template>
 
 <script>
-import TitleBar from '../components/titlebar.vue'
-import DashBoardContent from '../components/dashboardcontent.vue'
-import Tail from '../components/tail.vue'
+import TitleBar from '@/components/titlebar.vue'
+import DashBoardContent from '@/components/dashboardcontent.vue'
+import Tail from '@/components/tail.vue'
 
 export default {
     name: "DashBoard",

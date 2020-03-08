@@ -12,7 +12,7 @@
 
 <script>
 import {mapState} from 'vuex'
-const fb = require('../firebaseConfig')
+const fb = require('@/firebaseConfig')
 
 export default {
     name: "TitleBar",

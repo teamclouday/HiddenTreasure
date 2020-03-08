@@ -11,9 +11,9 @@
 </template>
 
 <script>
-import TitleBar from '../components/titlebar.vue'
-import LoginForm from '../components/loginform.vue'
-import Tail from '../components/tail.vue'
+import TitleBar from '@/components/titlebar.vue'
+import LoginForm from '@/components/loginform.vue'
+import Tail from '@/components/tail.vue'
 
 export default {
     name: "Login",

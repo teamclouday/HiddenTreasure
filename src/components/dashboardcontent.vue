@@ -41,7 +41,7 @@
 <script>
 import { mapState } from 'vuex'
 import Simplert from 'vue2-simplert/src/Simplert'
-const fb = require('../firebaseConfig')
+const fb = require('@/firebaseConfig')
 
 export default {
     name: "DashBoardContent",

@@ -1,8 +1,8 @@
 import Vue from 'vue'
-import router from './router'
-import App from './pages/template.vue'
-import {store} from './store'
-const fb = require('./firebaseConfig')
+import router from '@/router'
+import App from '@/pages/template.vue'
+import {store} from '@/store'
+const fb = require('@/firebaseConfig')
 import VueHeadful from 'vue-headful'
 import VueTabs from 'vue-nav-tabs'
 import 'vue-nav-tabs/themes/vue-tabs.css'

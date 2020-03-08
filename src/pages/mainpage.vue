@@ -12,9 +12,9 @@
 </template>
 
 <script>
-import MainTitleBar from '../components/maintitlebar.vue'
-import MainContent from '../components/maincontent.vue'
-import Tail from '../components/tail.vue'
+import MainTitleBar from '@/components/maintitlebar.vue'
+import MainContent from '@/components/maincontent.vue'
+import Tail from '@/components/tail.vue'
 
 export default {
   name: 'MainPage',
