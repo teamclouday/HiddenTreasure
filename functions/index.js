@@ -12,15 +12,18 @@ const db = admin.firestore()
 // 1. id array
 exports.updateBasics = functions.firestore
     .document("items/{item_id}")
-    .onCreate(() => {
-        const newId = [];
-        db.collection("items_data").doc("ids").get().then((snap) => {
-            let ids = snap.data().ids
-            ids.push(newId)
-            db.collection("items_data").doc("ids").set({'ids':ids}).catch(err => {
-                console.log(err)
-            })
-        }).catch(err => {
-            console.log(err)
-        })
+    .onWrite((snap, context) => {
+        // const newId = [];
+        // db.collection("items_data").doc("ids").get().then((snap) => {
+        //     let ids = snap.data().ids
+        //     ids.push(newId)
+        //     db.collection("items_data").doc("ids").set({'ids':ids}).catch(err => {
+        //         console.log(err)
+        //     })
+        // }).catch(err => {
+        //     console.log(err)
+        // })
+        console.log(snap.data())
+
+        console.log(context.params.item_id)
 })
