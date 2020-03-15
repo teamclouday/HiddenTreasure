@@ -10,14 +10,14 @@
   "dependencies": {
     "babel-helper-vue-jsx-merge-props": "^2.0.3",
     "core-js": "^3.6.4",
-    "firebase": "^7.9.3",
+    "firebase": "^7.11.0",
     "jquery": "^3.4.1",
     "vue": "^2.6.11",
     "vue-headful": "^2.1.0",
     "vue-nav-tabs": "^0.5.7",
     "vue-router": "^3.1.6",
     "vue2-simplert": "^1.0.0",
-    "vuex": "^3.1.2"
+    "vuex": "^3.1.3"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "~4.2.0",
@@ -25,7 +25,7 @@
     "@vue/cli-service": "~4.2.0",
     "babel-eslint": "^10.0.3",
     "eslint": "^6.7.2",
-    "eslint-plugin-vue": "^6.1.2",
+    "eslint-plugin-vue": "^6.2.2",
     "vue-template-compiler": "^2.6.11"
   },
   "eslintConfig": {
