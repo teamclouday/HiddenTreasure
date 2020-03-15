@@ -351,9 +351,11 @@ export default {
     border-color: black;
     outline: none;
     cursor: pointer;
+    transition: 0.5s ease;
+    -webkit-transition: 0.5s ease;
 }
 #bio_update:hover{
-    box-shadow: 2px 2px;
+    border-width: 4px;
 }
 .reset{
     width: 80%;
@@ -416,27 +418,25 @@ export default {
     border-style: solid;
     border-color: rgb(112, 22, 22);
     border-width: 4px;
-    font-size: 30px;
     font-weight: bold;
     font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
-    background-color: rgb(206, 52, 52);
-    color: aliceblue;
     cursor: pointer;
-    transition-duration: 0.2s;
+    transition: 0.5s ease;
+    -webkit-transition: 0.5s ease;
     outline: none;
-}
-#reset_destroy:hover{
     background-color: rgb(255, 175, 175);
     color: rgb(0, 0, 0);
+    font-size: 30px;
+}
+#reset_destroy:hover{
+    background-color: rgb(206, 52, 52);
+    color: aliceblue;
     font-size: 35px;
 }
-</style>
-
-<style>
-.tab-content.right-text-tabs{
+.content >>> .tab-content.right-text-tabs{
     width: 100%;
 }
-.left-vertical-tabs{
+.content >>> .left-vertical-tabs{
     width: 20%;
     overflow: hidden;
 }

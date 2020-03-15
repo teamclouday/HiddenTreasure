@@ -15,7 +15,8 @@ fb.auth().onAuthStateChanged(user => {
 export const store = new Vuex.Store({
     state:{
         currentUser: null,
-        userProfile: {}
+        userProfile: {},
+        itemsnap: [{"ID": null, "ItemName": null, "ItemPrice": null, "ItemURL": null, "ItemType": null}]
     },
     actions:{
         fetchUserProfile({commit, state}){
@@ -28,6 +29,24 @@ export const store = new Vuex.Store({
         clearData({commit}){
             commit('setCurrentUser', null)
             commit('setUserProfile', {})
+        },
+        updateItems({commit, state})
+        {
+            commit('setItems', [])
+            fb.itemsCollection.get().then(snap => {
+                snap.forEach(item => {
+                    let ref = item.data()
+                    let data = {}
+                    data["ID"] = item.id
+                    data["ItemName"] = ref["Item Name"]
+                    data["ItemPrice"] = ref["Item Price ($)"]
+                    data["ItemURL"] = ref["Item URL (image)"]
+                    data["ItemType"] = ref["Item Type"]
+                    state.itemsnap.push(data)
+                })
+            }).catch(err => {
+                console.log(err)
+            })
         }
     },
     mutations:{
@@ -50,6 +69,18 @@ export const store = new Vuex.Store({
         setUserBio(state, val)
         {
             state.userProfile.bio = val
+        },
+        setItems(state, val)
+        {
+            state.itemsnap = val
         }
     }
+    // getters:{
+    //     getItem: state => id => {
+    //         return state.itemsnap.filter(x => x.ItemType === id)
+    //     },
+    //     getItemByIndex: state => index => {
+    //         return state.itemsnap[index]
+    //     }
+    // }
 })

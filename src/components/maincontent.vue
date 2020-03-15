@@ -1,13 +1,5 @@
 <template>
 <div class="content">
-    <div id="content_buttons">
-        <button type="button" id="btn1" class="content_btn">Shoes</button>
-        <button type="button" id="btn2" class="content_btn">Clothes</button>
-        <button type="button" id="btn3" class="content_btn">Pants</button>
-        <button type="button" id="btn4" class="content_btn">Electronic Devices</button>
-        <button type="button" id="btn5" class="content_btn">Books</button>
-    </div>
-
     <div id="content_advs">
         <img id="img1" src="https://2app.kicksonfire.com/kofapp/upload/events_master_images/ipad_a6228e683e8b5b0bfa8730b2cf403a6e5e03ebe0eb7ff.jpg" alt="shoes" class="content_img_adv">
         <img id="img2" src="https://cdn.shopify.com/s/files/1/0071/3637/8998/articles/palace-hypebeast-mens-fashion-style-streetwear_1024x1024.jpg?v=1542114553" alt="clothes" class="content_img_adv">
@@ -16,50 +8,70 @@
         <img id="img5" src="https://martijnscheijbeler.com/wp-content/uploads/books.jpg" alt="books" class="content_img_adv">
         <img>
     </div>
+
+    <vue-tabs
+        class="content_tabs"
+        :start-index="1"
+        active-tab-color="rgb(58, 78, 104)"
+        active-text-color="white">
+        <v-tab id="tab1" class="content_tab" title="Shoes">
+        <!-- <div v-if="ItemShoes.length"> -->
+        <ItemBlock v-for="item in randomItems(itemsnap.filter(x => x.ItemType === 'Shoes'))" v-bind:key="item['ID']" v-bind:ItemName="item['ItemName']" v-bind:ItemPrice="item['ItemPrice']" v-bind:ItemImgUrl="item['ItemURL']" v-bind:ItemType="item['ItemType']"/>
+        <!-- </div> -->
+        </v-tab>
+        <v-tab id="tab2" class="content_tab" title="Clothes">
+        <ItemBlock v-for="item in randomItems(itemsnap.filter(x => x.ItemType === 'clothes'))" v-bind:key="item['ID']" v-bind:ItemName="item['ItemName']" v-bind:ItemPrice="item['ItemPrice']" v-bind:ItemImgUrl="item['ItemURL']" v-bind:ItemType="item['ItemType']"/>
+        </v-tab>
+        <v-tab id="tab3" class="content_tab" title="Pants">
+        <ItemBlock v-for="item in randomItems(itemsnap.filter(x => x.ItemType === 'pants'))" v-bind:key="item['ID']" v-bind:ItemName="item['ItemName']" v-bind:ItemPrice="item['ItemPrice']" v-bind:ItemImgUrl="item['ItemURL']" v-bind:ItemType="item['ItemType']"/>
+        </v-tab>
+        <v-tab id="tab4" class="content_tab" title="Electronic Devices">
+        <ItemBlock v-for="item in randomItems(itemsnap.filter(x => x.ItemType === 'electronic devices'))" v-bind:key="item['ID']" v-bind:ItemName="item['ItemName']" v-bind:ItemPrice="item['ItemPrice']" v-bind:ItemImgUrl="item['ItemURL']" v-bind:ItemType="item['ItemType']"/>
+        </v-tab>
+        <v-tab id="tab5" class="content_tab" title="Books">
+        <ItemBlock v-for="item in randomItems(itemsnap.filter(x => x.ItemType === 'books'))" v-bind:key="item['ID']" v-bind:ItemName="item['ItemName']" v-bind:ItemPrice="item['ItemPrice']" v-bind:ItemImgUrl="item['ItemURL']" v-bind:ItemType="item['ItemType']"/>
+        </v-tab>
+    </vue-tabs>
 </div>
 </template>
 
 <script>
+import { mapState } from 'vuex'
+import ItemBlock from "@/components/itemblock.vue"
+
 export default {
-    name: "MainContent"
+    name: "MainContent",
+    components: {
+        ItemBlock
+    },
+    computed: {
+        ...mapState(['itemsnap'])
+    },
+    data: function()
+    {
+        return {
+            randomItemNum: 6
+        }
+    },
+    methods: {
+        randomItems: function(items)
+        {
+            return items.sort(() => {return 0.5 - Math.random()}).slice(0, this.randomItemNum)
+        }
+    }
 }
 </script>
 
 <style scoped>
-#content_buttons
+.content_tabs
 {
     margin-left: auto;
     margin-right: auto;
-    margin-top: 10px;
-    width: 80%;
-    padding: 10px;
+    margin-top: 0;
+    width: 95%;
     text-align: center;
     overflow: hidden;
-}
-
-.content_btn
-{
-    display: inline-block;
-    width: 15%;
-    height: 40px;
-    margin-left: 10px;
-    margin-right: 10px;
-    overflow: hidden;
-    font-size: 20px;
-    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
-    border-style: none;
-    line-height: 40px;
-    background-color: bisque;
-    border-radius: 10px;
-    color: #ac3b3b;
-    cursor: pointer;
-    outline: none;
-}
-
-.content_btn:hover
-{
-    background-color: rgb(58, 78, 104);
-    color: azure;
+    font-size: 25px;
 }
 
 #content_advs
@@ -71,7 +83,7 @@ export default {
     overflow-y: hidden;
     margin-left: auto;
     margin-right: auto;
-    border-radius: 10px;
+    border-radius: 10px 10px 0px 0px;
     margin-top: 10px;
 }
 
@@ -82,7 +94,7 @@ export default {
     flex-shrink: 0;
     height: 100%;
     animation-name: adv_slide;
-    animation-duration: 30s;
+    animation-duration: 50s;
     animation-direction: normal;
     animation-timing-function: ease;
     animation-iteration-count: infinite;
@@ -96,5 +108,15 @@ export default {
     60% {transform: translateX(-300%);}
     80% {transform: translateX(-400%);}
     100% {transform: translateX(0);}
+}
+.content_tabs >>> .tab
+{
+    width: 20%;
+}
+.content_tabs >>> .nav-tabs-navigation
+{
+    width: auto;
+    margin-left: auto;
+    margin-right: auto;
 }
 </style>

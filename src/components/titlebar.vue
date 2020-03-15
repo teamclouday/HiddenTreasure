@@ -94,6 +94,8 @@ export default {
     color: #fff;
     border-style: none;
     background-color: transparent;
+    transition: 0.4s ease;
+    -webkit-transition: 0.4s ease;
 }
 
 .title_logo_button:hover

@@ -21,7 +21,10 @@ fb.auth().onAuthStateChanged(() => {
       el: '#app',
       router,
       store,
-      render: h => h(App)
+      render: h => h(App),
+      created: function(){
+          this.$store.dispatch('updateItems')
+      }
     })
   }
 })
