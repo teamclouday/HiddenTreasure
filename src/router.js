@@ -7,6 +7,7 @@ import AppSignup from '@/pages/signup.vue'
 import AppLogin from '@/pages/login.vue'
 import AppDashboard from '@/pages/dashboard.vue'
 import ItemDetail from '@/pages/itemdetail.vue'
+import PageNotFound from '@/pages/404.vue'
 
 Vue.use(VueRouter)
 
@@ -19,7 +20,8 @@ const router = new VueRouter({
       {path: '/signup', name: 'SignUp', component: AppSignup},
       {path: '/login', name: 'Login', component: AppLogin},
       {path: '/dashboard', name: 'Dashboard', component: AppDashboard, meta:{requiresAuth: true}},
-      {path: '/items/:itemid/name/:itemname', name: 'Item', component: ItemDetail}
+      {path: '/items/:itemid/name/:itemname', name: 'Item', component: ItemDetail},
+      {path: '*', name: '404', component: PageNotFound}
     ]
 })
 

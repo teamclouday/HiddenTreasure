@@ -8,18 +8,20 @@
       ref="simplert">
     </Simplert>
     <TitleBar/>
-    <div>
-        Item ID = 
-        {{itemid}}
-    </div>
-    <img alt="item image" v-bind:src="itemimgurl"/>
-    <div>
-        Item Name =
-        {{itemname}}
-    </div>
-    <div>
-        Item Price =
-        $ {{itemprice}}
+    <div v-if="itemprice > 0">
+        <div>
+            Item ID = 
+            {{itemid}}
+        </div>
+        <img alt="item image" v-bind:src="itemimgurl"/>
+        <div>
+            Item Name =
+            {{itemname}}
+        </div>
+        <div>
+            Item Price =
+            $ {{itemprice}}
+        </div>
     </div>
     <Tail/>
     </div>
@@ -47,6 +49,7 @@ export default {
         fb.itemsCollection.doc(this.$route.params.itemid).get().then(data => {
             this.itemimgurl = data.data()["Item URL (image)"]
             this.itemprice = data.data()["Item Price ($)"]
+            this.itemname = data.data()["Item Name"]
         }).catch(err => {
             let ref = this
             let obj = {
