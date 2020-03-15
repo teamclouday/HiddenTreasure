@@ -1,5 +1,5 @@
 <template>
-    <div id="item">
+    <div id="item" @click="click">
         <img alt="img" v-bind:src="ItemImgUrl" id="item_img"/>
         <div id="item_name">{{ItemName}}</div>
         <div id="item_price">$ {{ItemPrice}}</div>
@@ -34,6 +34,16 @@ export default {
                     'electronic devices',
                 ].indexOf(val) !== -1
             }
+        },
+        ItemID: {
+            type: String,
+            required: true
+        }
+    },
+    methods:{
+        click: function()
+        {
+            this.$router.push('/items/' + this.ItemID + '/name/' + this.ItemName)
         }
     }
 }

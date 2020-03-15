@@ -16,20 +16,20 @@
         active-text-color="white">
         <v-tab id="tab1" class="content_tab" title="Shoes">
         <!-- <div v-if="ItemShoes.length"> -->
-        <ItemBlock v-for="item in randomItems(itemsnap.filter(x => x.ItemType === 'Shoes'))" v-bind:key="item['ID']" v-bind:ItemName="item['ItemName']" v-bind:ItemPrice="item['ItemPrice']" v-bind:ItemImgUrl="item['ItemURL']" v-bind:ItemType="item['ItemType']"/>
+        <ItemBlock v-for="item in randomItems(itemsnap.filter(x => x.ItemType === 'Shoes'))" v-bind:key="item['ID']" v-bind:ItemName="item['ItemName']" v-bind:ItemPrice="item['ItemPrice']" v-bind:ItemImgUrl="item['ItemURL']" v-bind:ItemType="item['ItemType']" v-bind:ItemID="item['ID']"/>
         <!-- </div> -->
         </v-tab>
         <v-tab id="tab2" class="content_tab" title="Clothes">
-        <ItemBlock v-for="item in randomItems(itemsnap.filter(x => x.ItemType === 'clothes'))" v-bind:key="item['ID']" v-bind:ItemName="item['ItemName']" v-bind:ItemPrice="item['ItemPrice']" v-bind:ItemImgUrl="item['ItemURL']" v-bind:ItemType="item['ItemType']"/>
+        <ItemBlock v-for="item in randomItems(itemsnap.filter(x => x.ItemType === 'clothes'))" v-bind:key="item['ID']" v-bind:ItemName="item['ItemName']" v-bind:ItemPrice="item['ItemPrice']" v-bind:ItemImgUrl="item['ItemURL']" v-bind:ItemType="item['ItemType']" v-bind:ItemID="item['ID']"/>
         </v-tab>
         <v-tab id="tab3" class="content_tab" title="Pants">
-        <ItemBlock v-for="item in randomItems(itemsnap.filter(x => x.ItemType === 'pants'))" v-bind:key="item['ID']" v-bind:ItemName="item['ItemName']" v-bind:ItemPrice="item['ItemPrice']" v-bind:ItemImgUrl="item['ItemURL']" v-bind:ItemType="item['ItemType']"/>
+        <ItemBlock v-for="item in randomItems(itemsnap.filter(x => x.ItemType === 'pants'))" v-bind:key="item['ID']" v-bind:ItemName="item['ItemName']" v-bind:ItemPrice="item['ItemPrice']" v-bind:ItemImgUrl="item['ItemURL']" v-bind:ItemType="item['ItemType']" v-bind:ItemID="item['ID']"/>
         </v-tab>
         <v-tab id="tab4" class="content_tab" title="Electronic Devices">
-        <ItemBlock v-for="item in randomItems(itemsnap.filter(x => x.ItemType === 'electronic devices'))" v-bind:key="item['ID']" v-bind:ItemName="item['ItemName']" v-bind:ItemPrice="item['ItemPrice']" v-bind:ItemImgUrl="item['ItemURL']" v-bind:ItemType="item['ItemType']"/>
+        <ItemBlock v-for="item in randomItems(itemsnap.filter(x => x.ItemType === 'electronic devices'))" v-bind:key="item['ID']" v-bind:ItemName="item['ItemName']" v-bind:ItemPrice="item['ItemPrice']" v-bind:ItemImgUrl="item['ItemURL']" v-bind:ItemType="item['ItemType']" v-bind:ItemID="item['ID']"/>
         </v-tab>
         <v-tab id="tab5" class="content_tab" title="Books">
-        <ItemBlock v-for="item in randomItems(itemsnap.filter(x => x.ItemType === 'books'))" v-bind:key="item['ID']" v-bind:ItemName="item['ItemName']" v-bind:ItemPrice="item['ItemPrice']" v-bind:ItemImgUrl="item['ItemURL']" v-bind:ItemType="item['ItemType']"/>
+        <ItemBlock v-for="item in randomItems(itemsnap.filter(x => x.ItemType === 'books'))" v-bind:key="item['ID']" v-bind:ItemName="item['ItemName']" v-bind:ItemPrice="item['ItemPrice']" v-bind:ItemImgUrl="item['ItemURL']" v-bind:ItemType="item['ItemType']" v-bind:ItemID="item['ID']"/>
         </v-tab>
     </vue-tabs>
 </div>

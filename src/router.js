@@ -6,6 +6,7 @@ import AppInfo from '@/pages/infopage.vue'
 import AppSignup from '@/pages/signup.vue'
 import AppLogin from '@/pages/login.vue'
 import AppDashboard from '@/pages/dashboard.vue'
+import ItemDetail from '@/pages/itemdetail.vue'
 
 Vue.use(VueRouter)
 
@@ -17,11 +18,12 @@ const router = new VueRouter({
       {path: '/info', name: 'Info', component: AppInfo},
       {path: '/signup', name: 'SignUp', component: AppSignup},
       {path: '/login', name: 'Login', component: AppLogin},
-      {path: '/dashboard', name: 'Dashboard', component: AppDashboard, meta:{requiresAuth: true}}
+      {path: '/dashboard', name: 'Dashboard', component: AppDashboard, meta:{requiresAuth: true}},
+      {path: '/items/:itemid/name/:itemname', name: 'Item', component: ItemDetail}
     ]
 })
 
-router.beforeEach((to, from, next) => {
+router.beforeEach((to, _, next) => {
   const requiresAuth = to.matched.some(x => x.meta.requiresAuth)
   const currentUser = firebase.auth().currentUser
 
