@@ -15,6 +15,14 @@
                 <div v-if="!currentUser.emailVerified" id="verify">You have not verified your email yet!</div>
                 <img id="avatar" src="" alt="avatar" width="150px" height="150px" @click="updateAvatar"/>
                 <input id="name" v-model="userProfile.name"/>
+                <div id="follow">
+                    <div style="float:left; width:50%; cursor: pointer;">
+                    Followers: {{Object.keys(userProfile.followers).length}}
+                    </div>
+                    <div style="float:none; cursor: pointer;">
+                    Following: {{Object.keys(userProfile.following).length}}
+                    </div>
+                </div>
                 <label for="bio" id="bio_label">Bio</label>
                 <textarea name="bio" rows="2" maxlength="100" placeholder="Enter Your Bio Here" wrap="soft" autocomplete="on" id="bio_text" v-on:keydown.enter="limitBioRows" v-model="userProfile.bio"></textarea>
                 <button id="bio_update" @click="updateUserBio">Update Profile</button>
@@ -438,6 +446,16 @@ export default {
 }
 .content >>> .left-vertical-tabs{
     width: 20%;
+    overflow: hidden;
+}
+#follow
+{
+    width: 350px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 20px;
+    text-align: center;
+    font-size: 25px;
     overflow: hidden;
 }
 </style>

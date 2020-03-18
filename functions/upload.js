@@ -11,13 +11,21 @@ const settings = {timestampsInSnapshots: true}
 firestore.settings(settings)
 let i = 1
 if (data && (typeof data === "object")) {
-   let ids = []
+   let ids = {}
+   let date = new Date()
+   let i = 0
    Object.keys(data).forEach(docKey => {
       delete data[docKey]["Item URL Label (image)"]
+      data[docKey]["Item Rating"] = 0
+      data[docKey]["Item Raters Count"] = 0
+      data[docKey]["Item Raters Ids"] = []
+      data[docKey]["Item Owner ID"] = "w7lk7a1UlXV43MnsmFT9uykwCCJ3"
+      data[docKey]["Item Comments"] = []
       firestore.collection(collectionKey).add(data[docKey]).then((res) => {
-         ids.push(res.id)
+         ids[res.id] = date.getTime() + i * 5000
          console.log("Document " + data[docKey]["Item Name"] + " successfully written!")
          finish(ids)
+         i++
       }).catch((error) => {
          console.error("Error writing document: ", error)
       })
@@ -26,11 +34,13 @@ if (data && (typeof data === "object")) {
 
 function finish(ids)
 {
-   if(ids.length == 50)
+   if(Object.keys(ids).length == 50)
    {
       console.log("done")
-      firestore.collection("items_data").doc("ids").set({"ids" : ids}).catch(err => {
-         console.log(err)
+      firestore.collection("users").doc("w7lk7a1UlXV43MnsmFT9uykwCCJ3").update({
+         "items_sell" : ids
+      }).catch(err => {
+         console.log(err.message)
       })
    }
 }

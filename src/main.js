@@ -4,6 +4,7 @@ import App from '@/pages/template.vue'
 import {store} from '@/store'
 const fb = require('@/firebaseConfig')
 import VueHeadful from 'vue-headful'
+import TextareaAutosize from 'vue-textarea-autosize'
 import VueTabs from 'vue-nav-tabs'
 import 'vue-nav-tabs/themes/vue-tabs.css'
 
@@ -12,6 +13,7 @@ Vue.config.devtools = false
 
 Vue.component('vue-headful', VueHeadful)
 Vue.use(VueTabs)
+Vue.use(TextareaAutosize)
 
 let app
 fb.auth().onAuthStateChanged(() => {

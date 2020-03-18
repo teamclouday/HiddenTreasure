@@ -66,7 +66,11 @@ export default {
                     fb.usersCollection.doc(user.user.uid).set({
                         name: this.signupForm.name,
                         avatar: this.randomAvatar(),
-                        bio: ""
+                        bio: "",
+                        items_sell: {},
+                        items_buy: {},
+                        followers: {},
+                        following: {}
                     }).then(() => {
                         this.$store.dispatch('fetchUserProfile')
                         this.performingRequest = false

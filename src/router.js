@@ -6,6 +6,7 @@ import AppInfo from '@/pages/infopage.vue'
 import AppSignup from '@/pages/signup.vue'
 import AppLogin from '@/pages/login.vue'
 import AppDashboard from '@/pages/dashboard.vue'
+import AppDashboardSimple from "@/pages/dashboardsimple.vue"
 import ItemDetail from '@/pages/itemdetail.vue'
 import PageNotFound from '@/pages/404.vue'
 
@@ -21,6 +22,7 @@ const router = new VueRouter({
       {path: '/login', name: 'Login', component: AppLogin},
       {path: '/dashboard', name: 'Dashboard', component: AppDashboard, meta:{requiresAuth: true}},
       {path: '/items/:itemid/name/:itemname', name: 'Item', component: ItemDetail},
+      {path: '/dashboard/:otheruserid/name/:othername', name: 'Others Dashboard', component: AppDashboardSimple},
       {path: '*', name: '404', component: PageNotFound}
     ]
 })
