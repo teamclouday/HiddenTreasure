@@ -69,8 +69,8 @@ export default {
                         bio: "",
                         items_sell: {},
                         items_buy: {},
-                        followers: {},
-                        following: {}
+                        followers: [],
+                        following: []
                     }).then(() => {
                         this.$store.dispatch('fetchUserProfile')
                         this.performingRequest = false

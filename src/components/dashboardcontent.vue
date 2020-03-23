@@ -8,9 +8,10 @@
             active-tab-color="#e74c3c" 
             active-text-color="white"
             type="pills"
-            :start-index="1"
+            v-model="tabid"
             direction="vertical"
-            class="content">
+            class="content"
+            @tab-change="tabChange">
             <v-tab title="Profile" class="content_inside">
                 <div v-if="!currentUser.emailVerified" id="verify">You have not verified your email yet!</div>
                 <img id="avatar" v-bind:src="userProfile.avatar" alt="avatar" width="150px" height="150px" @click="updateAvatar"/>
@@ -27,8 +28,20 @@
                 <textarea name="bio" rows="2" maxlength="100" placeholder="Enter Your Bio Here" wrap="soft" autocomplete="on" id="bio_text" v-on:keydown.enter="limitBioRows" v-model="userProfile.bio"></textarea>
                 <button id="bio_update" @click="updateUserBio">Update Profile</button>
             </v-tab>
-            <v-tab title="Community" class="content_inside">
-                Nothing here yet
+            <v-tab title="Community" class="content_inside" style="overflow-y: scroll;">
+                <div v-if="!userProfile.followers && !userProfile.following" style="text-align:center;">
+                    No activity yet
+                </div>
+                <div v-if="userProfile.followers">
+                    <div v-for="(item, index) in userProfile.followers" v-bind:key="index" class="follow_activity" @click="gotoUser(item.userid, item.username)">
+                        <b>{{item.username}}</b> followed you on {{convertDate(item.time)}}
+                    </div>
+                </div>
+                <div v-if="userProfile.following">
+                    <div v-for="(item, index) in userProfile.following" v-bind:key="index" class="follow_activity" @click="gotoUser(item.userid, item.username)">
+                        You followed <b>{{item.username}}</b> on {{convertDate(item.time)}}
+                    </div>
+                </div>
             </v-tab>
             <v-tab title="Selling" class="content_inside">
                 Nothing here yet
@@ -60,7 +73,16 @@ const fb = require('@/firebaseConfig')
 export default {
     name: "DashBoardContent",
     computed: {
-        ...mapState(['userProfile', 'currentUser']),
+        ...mapState(['userProfile', 'currentUser', 'dashboardtabid']),
+    },
+    data(){
+        return{
+            tabid: 1
+        }
+    },
+    created()
+    {
+        this.tabid = this.dashboardtabid
     },
     methods:{
         limitBioRows: function(e){
@@ -243,6 +265,20 @@ export default {
             }).catch(err => {
                 this.popupError(err.message)
             })
+        },
+        tabChange: function(id)
+        {
+            this.$store.commit('setDashboardTabId', id)
+        },
+        convertDate(rawdate)
+        {
+            let date = new Date()
+            date.setTime(rawdate)
+            return date.toLocaleString()
+        },
+        gotoUser(userid, username)
+        {
+            this.$router.push('/dashboard/' + userid + "/name/" + username)
         }
     },
     // mounted: function(){
@@ -258,6 +294,29 @@ export default {
 </script>
 
 <style scoped>
+.follow_activity
+{
+    border-style: solid;
+    border-color: rgb(255, 164, 136);
+    border-radius: 5px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 20px;
+    width: 90%;
+    padding: 5px;
+    cursor: pointer;
+    background-color: rgb(255, 164, 136);
+    height: 30px;
+    font-size: 25px;
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    transition-duration: 0.5s;
+}
+
+.follow_activity:hover
+{
+    border-color: black;
+}
+
 .content{
     width: 70%;
     height: 700px;
@@ -276,7 +335,8 @@ export default {
     display: block;
     margin: 10px;
     height: 98%;
-    overflow: hidden;
+    overflow-y: hidden;
+    overflow-x: hidden;
     /* border-style: dashed; */
 }
 #verify{

@@ -16,7 +16,9 @@ export const store = new Vuex.Store({
     state:{
         currentUser: null,
         userProfile: {},
-        itemsnap: [{"ID": null, "ItemName": null, "ItemPrice": null, "ItemURL": null, "ItemType": null}]
+        itemsnap: [{"ID": null, "ItemName": null, "ItemPrice": null, "ItemURL": null, "ItemType": null}],
+        dashboardtabid: 0,
+        maincontenttabid: 0
     },
     actions:{
         fetchUserProfile({commit, state}){
@@ -73,6 +75,14 @@ export const store = new Vuex.Store({
         setItems(state, val)
         {
             state.itemsnap = val
+        },
+        setDashboardTabId(state, val)
+        {
+            state.dashboardtabid = val
+        },
+        setMainContentTabId(state, val)
+        {
+            state.maincontenttabid = val
         }
     }
     // getters:{

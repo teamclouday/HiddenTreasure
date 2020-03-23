@@ -11,9 +11,10 @@
 
     <vue-tabs
         class="content_tabs"
-        :start-index="1"
+        v-model="tabid"
         active-tab-color="rgb(58, 78, 104)"
-        active-text-color="white">
+        active-text-color="white"
+        @tab-change="tabChange">
         <v-tab id="tab1" class="content_tab" title="Shoes">
         <!-- <div v-if="ItemShoes.length"> -->
         <ItemBlock v-for="item in randomItems(itemsnap.filter(x => x.ItemType === 'Shoes'))" v-bind:key="item['ID']" v-bind:ItemName="item['ItemName']" v-bind:ItemPrice="item['ItemPrice']" v-bind:ItemImgUrl="item['ItemURL']" v-bind:ItemType="item['ItemType']" v-bind:ItemID="item['ID']"/>
@@ -45,18 +46,26 @@ export default {
         ItemBlock
     },
     computed: {
-        ...mapState(['itemsnap'])
+        ...mapState(['itemsnap', 'maincontenttabid'])
     },
     data: function()
     {
         return {
-            randomItemNum: 6
+            randomItemNum: 6,
+            tabid: 0
         }
+    },
+    created(){
+        this.tabid = this.maincontenttabid
     },
     methods: {
         randomItems: function(items)
         {
             return items.sort(() => {return 0.5 - Math.random()}).slice(0, this.randomItemNum)
+        },
+        tabChange: function(id)
+        {
+            this.$store.commit('setMainContentTabId', id)
         }
     }
 }

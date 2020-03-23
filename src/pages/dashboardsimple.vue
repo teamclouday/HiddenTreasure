@@ -12,10 +12,10 @@
             <input id="name" v-model="username" disabled="true"/>
             <div id="follow">
                 <div style="float:left; width:50%;">
-                Followers: {{numfollowers}}
+                Followers: {{followers.length}}
                 </div>
                 <div style="float:none;">
-                Following: {{numfollowing}}
+                Following: {{following.length}}
                 </div>
             </div>
             <button v-if="currentUser" id="follow_btn" @click="follow">Follow</button>
@@ -58,8 +58,8 @@ export default {
             username: '',
             userbio: '',
             useravatar: '',
-            numfollowing: 0,
-            numfollowers: 0,
+            following: [],
+            followers: [],
             recentitems: []
         }
     },
@@ -78,8 +78,14 @@ export default {
             let ref = data.data()
             this.userbio = ref["bio"]
             this.useravatar = ref["avatar"]
-            this.numfollowing = Object.keys(ref["following"]).length
-            this.numfollowers = Object.keys(ref["followers"]).length
+            for(let i = 0; i < ref["following"].length; i++)
+            {
+                this.following.push(ref["following"][i])
+            }
+            for(let i = 0; i < ref["followers"].length; i++)
+            {
+                this.followers.push(ref["followers"][i])
+            }
             let allitems = ref["items_sell"]
             let tmpitems = Object.keys(allitems).sort(function(a, b){return (allitems[b] - allitems[a])}).slice(0, 10)
             tmpitems = tmpitems.map((x) => {return [x, allitems[x]]})
@@ -89,7 +95,7 @@ export default {
         })
     },
     computed: {
-        ...mapState(['currentUser']),
+        ...mapState(['currentUser', 'userProfile']),
     },
     methods:{
         processData(data)
@@ -145,15 +151,48 @@ export default {
             }
             else
             {
-                let newdata = {}
-                let date = new Date()
-                newdata[this.currentUser.uid] = date.getTime()
-                console.log(this.userid)
-                fb.usersCollection.doc(this.userid).update({
-                    followers: firebase.firestore.FieldValue.arrayUnion(newdata)
-                }).catch(err => {
-                    console.log(err.message)
-                })
+                if(this.followers.filter(x => x["userid"] == this.currentUser.uid).length)
+                {
+                    let obj = {
+                        title: 'Failed to follow',
+                        message: "You have already followed",
+                        type: 'info',
+                        customCloseBtnText: 'OK'
+                    }
+                    this.$refs.simplert.openSimplert(obj)
+                }
+                else
+                {
+                    let newdata = {}
+                    let newdatacopy = {}
+                    let date = new Date()
+                    newdata["userid"] = this.currentUser.uid
+                    newdatacopy["userid"] = this.userid
+                    newdata["username"] = this.userProfile["name"]
+                    newdatacopy["username"] = this.username
+                    newdata["time"] = date.getTime()
+                    newdatacopy["time"] = date.getTime()
+                    this.followers.push(newdata)
+                    fb.usersCollection.doc(this.userid).update({
+                        followers: firebase.firestore.FieldValue.arrayUnion(newdata)
+                    }).then(() => {
+                        fb.usersCollection.doc(this.currentUser.uid).update({
+                            following: firebase.firestore.FieldValue.arrayUnion(newdatacopy)
+                        }).then(() => {
+                                let obj = {
+                                title: 'Follow Successful',
+                                message: "You have successfully followed",
+                                type: 'success',
+                                customCloseBtnText: 'OK'
+                            }
+                            this.$refs.simplert.openSimplert(obj)
+                        }).catch(err => {
+                            console.log(err.message)
+                        })
+                    }).catch(err => {
+                        console.log(err.message)
+                    })
+                }
             }
         }
     }
