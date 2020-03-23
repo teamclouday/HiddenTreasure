@@ -3,9 +3,9 @@
     <div id="copyright_buttons">
         <router-link type="button" id="copyright_button" to="/info#info_help">Help</router-link>
         <router-link type="button" id="copyright_button" to="/info#info_info">Information</router-link>
-        <button type="button" id="copyright_button" onclick="location.href='https\:\/\/stockx.com/'">Reference</button>
-        <button type="button" id="copyright_button" onclick="location.href='https\:\/\/github.com/teamclouday/HiddenTreasure'">Support</button>
-        <button type="button" id="copyright_button" onclick="location.href='mailto:teamclouday@gmail.com'">Contact Sida</button>
+        <button type="button" id="copyright_button" onclick=" window.open('https\:\/\/stockx.com/', '_blank')">Reference</button>
+        <button type="button" id="copyright_button" onclick=" window.open('https\:\/\/github.com/teamclouday/HiddenTreasure', '_blank')">Support</button>
+        <button type="button" id="copyright_button" onclick=" location.href='mailto:teamclouday@gmail.com'">Contact Sida</button>
     </div>
     <div id="tail_copyright">&copy; 2020 CIS 454 Group 4</div>
 </div>

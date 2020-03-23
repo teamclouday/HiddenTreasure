@@ -18,7 +18,7 @@
                 Price:
                 $ {{itemprice}}
             </div>
-            <StarRating id="item_stars" v-bind:rating="itemrating" v-bind:show-rating="true" v-bind:max-rating="5" v-bind:fixed-points="1" v-bind:increment="0.1" @rating-selected="updateRating"/>
+            <StarRating id="item_stars" v-model="itemtmprating" v-bind:show-rating="true" v-bind:max-rating="5" v-bind:fixed-points="1" v-bind:increment="0.1" @rating-selected="updateRating"/>
             <div id="item_numraters">
                 {{itemnumraters}} people have rated this
             </div>
@@ -35,6 +35,7 @@
                     <textarea-autosize v-model="item.comment" readonly id="other_comment_txt"></textarea-autosize>
                     <div style="width:90%; text-align: right; margin-top: 10px; font-size: 20px;">By <b style="cursor:pointer; text-decoration:underline;" @click="jumpToUser(item.user, item.username)">{{item.username}}</b></div>
                     <div style="width:90%; text-align: right;">On <i>{{convertDate(item.time)}}</i></div>
+                    <button v-if="currentUser && currentUser.uid == item.user" id="comment_delete" @click="removeComment(index, item.comment, item.user, item.time)">Delete Comment</button>
                 </div>
             </div>
             <hr style="width:90%;"/>
@@ -67,6 +68,7 @@ export default {
             itemimgurl: 'https://user-images.githubusercontent.com/24848110/33519396-7e56363c-d79d-11e7-969b-09782f5ccbab.png',
             itemprice: 0.0,
             itemrating: 0.0,
+            itemtmprating: 0.0,
             itemnumraters: 0,
             itemraterids: [],
             itemownerid: '',
@@ -85,6 +87,7 @@ export default {
             this.itemprice = ref["Item Price ($)"]
             this.itemname = ref["Item Name"]
             this.itemrating = ref["Item Rating"]
+            this.itemtmprating = this.itemrating
             this.itemraterids = ref["Item Raters Ids"]
             this.itemnumraters = ref["Item Raters Count"]
             this.itemownerid = ref["Item Owner ID"]
@@ -117,9 +120,10 @@ export default {
     },
     methods:
     {
-        updateRating: function(newRating)
+        updateRating: async function(newRating)
         {
-            if(this.checkRater())
+            let result = await this.checkRater()
+            if(result)
             {
                 let sum = this.itemrating * this.itemnumraters + newRating
                 this.itemnumraters += 1
@@ -132,6 +136,10 @@ export default {
                 }).catch(err => {
                     console.log(err.message)
                 })
+            }
+            else
+            {
+                this.itemtmprating = this.itemrating
             }
         },
         gotoSeller: function()
@@ -253,6 +261,20 @@ export default {
             let date = new Date()
             date.setTime(rawdate)
             return date.toLocaleString()
+        },
+        removeComment(index, content, userid, date)
+        {
+            fb.itemsCollection.doc(this.itemid).update({
+                "Item Comments": this.itemcomments.filter(x => {
+                    x.comment != content &&
+                    x.user != userid &&
+                    x.time != date
+                })
+            }).then(() => {
+                this.itemcomments.splice(index, 1)
+            }).catch(err => {
+                console.log(err.message)
+            })
         }
     },
     computed: {
@@ -408,5 +430,25 @@ export default {
     outline: none;
     cursor: default;
     font-size: 20px;
+}
+
+#comment_delete
+{
+    display: block;
+    margin-left: auto;
+    margin-right: 10%;
+    font-size: 18px;
+    border-style: none;
+    border-radius: 5px;
+    border-style: solid;
+    cursor: pointer;
+    transition-duration: 0.5s;
+    outline: none;
+}
+
+#comment_delete:hover
+{
+    border-width: 2px;
+    border-color: black;
 }
 </style>

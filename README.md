@@ -13,6 +13,10 @@ For the frontend, we use [Vue.js](https://vuejs.org/)
 
 For the backend, we use [Firebase.js](https://firebase.google.com/)  
 
+### Search Engine  
+
+We use [algolia](https://www.algolia.com/) for the search function  
+
 ------  
 
 Install the project:  

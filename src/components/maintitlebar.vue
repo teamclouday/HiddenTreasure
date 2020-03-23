@@ -1,5 +1,9 @@
 <template>
 <div class="title">
+    <Simplert :useRadius="true"
+        :useIcon="true"
+        ref="simplert">
+    </Simplert>
     <div id="logo_bar">
         <img src= "../assets/logo.png" id="title_logo_img" alt="treasure logo">
         <h2 id="title_logo">Hidden Treasure</h2>
@@ -14,13 +18,13 @@
     <div style="clear: both;">
         <label id="title_label">Buy & Sell</label>
         <div id="title_search_cover">
-            <form method="get">
+            <form @submit.prevent>
                 <div class="tb">
                 <div class="td">
-                    <input type="text" placeholder="Search" required>
+                    <input type="text" placeholder="Search" v-model="searchContent" @keyup.enter="search">
                 </div>
                 <div class="td" id="coverer">
-                  <button type="submit">
+                  <button type="button" @click="search">
                     <div id="circler"></div>
                     <span></span>
                   </button>
@@ -35,6 +39,7 @@
 <script>
 import {mapState} from 'vuex'
 const fb = require('@/firebaseConfig')
+import Simplert from 'vue2-simplert/src/Simplert'
 
 export default {
     name: "MainTitleBar",
@@ -50,7 +55,32 @@ export default {
             }).catch(err => {
                 console.log(err)
             })
+        },
+        search: function()
+        {
+            if(this.searchContent != '')
+            {
+                this.$router.push('/search/' + this.searchContent)
+            }
+            else
+            {
+                let obj = {
+                    title: 'Failed to search',
+                    message: "Please enter your search key words",
+                    type: 'info',
+                    customCloseBtnText: 'OK'
+                }
+                this.$refs.simplert.openSimplert(obj)
+            }
         }
+    },
+    data(){
+        return {
+            searchContent: ''
+        }
+    },
+    components: {
+        Simplert
     }
 }
 </script>

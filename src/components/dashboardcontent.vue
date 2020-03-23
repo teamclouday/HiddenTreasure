@@ -13,14 +13,14 @@
             class="content">
             <v-tab title="Profile" class="content_inside">
                 <div v-if="!currentUser.emailVerified" id="verify">You have not verified your email yet!</div>
-                <img id="avatar" src="" alt="avatar" width="150px" height="150px" @click="updateAvatar"/>
+                <img id="avatar" v-bind:src="userProfile.avatar" alt="avatar" width="150px" height="150px" @click="updateAvatar"/>
                 <input id="name" v-model="userProfile.name"/>
                 <div id="follow">
-                    <div style="float:left; width:50%; cursor: pointer;">
-                    Followers: {{Object.keys(userProfile.followers).length}}
+                    <div style="float:left; width:50%;">
+                    Followers: {{(userProfile.followers) ? Object.keys(userProfile.followers).length : 0}}
                     </div>
-                    <div style="float:none; cursor: pointer;">
-                    Following: {{Object.keys(userProfile.following).length}}
+                    <div style="float:none;">
+                    Following: {{(userProfile.following) ? Object.keys(userProfile.following).length : 0}}
                     </div>
                 </div>
                 <label for="bio" id="bio_label">Bio</label>
@@ -28,6 +28,12 @@
                 <button id="bio_update" @click="updateUserBio">Update Profile</button>
             </v-tab>
             <v-tab title="Community" class="content_inside">
+                Nothing here yet
+            </v-tab>
+            <v-tab title="Selling" class="content_inside">
+                Nothing here yet
+            </v-tab>
+            <v-tab title="Bought" class="content_inside">
                 Nothing here yet
             </v-tab>
             <v-tab title="Security" class="content_inside">
@@ -239,12 +245,12 @@ export default {
             })
         }
     },
-    mounted: function(){
-        document.getElementById("avatar").setAttribute("src", this.userProfile.avatar)
-    },
-    updated: function(){
-        document.getElementById("avatar").setAttribute("src", this.userProfile.avatar)
-    },
+    // mounted: function(){
+    //     document.getElementById("avatar").setAttribute("src", this.userProfile.avatar)
+    // },
+    // updated: function(){
+    //     document.getElementById("avatar").setAttribute("src", this.userProfile.avatar)
+    // },
     components:{
         Simplert
     }

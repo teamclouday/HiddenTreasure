@@ -18,7 +18,7 @@
                 Following: {{numfollowing}}
                 </div>
             </div>
-            <button id="follow_btn" @click="follow">Follow</button>
+            <button v-if="currentUser" id="follow_btn" @click="follow">Follow</button>
             <label for="bio" id="bio_label">Bio</label>
             <textarea name="bio" rows="2" maxlength="100" placeholder="Enter Your Bio Here" wrap="soft" id="bio_text" v-model="userbio" readonly></textarea>
             <div id="activity_title">Recent Activity</div>
@@ -67,9 +67,12 @@ export default {
     {
         this.userid = this.$route.params.otheruserid
         this.username = this.$route.params.othername
-        if(this.userid == this.currentUser.uid)
+        if(this.currentUser)
         {
-            this.$router.push('/dashboard')
+            if(this.userid == this.currentUser.uid)
+            {
+                this.$router.replace('/dashboard')
+            }
         }
         fb.usersCollection.doc(this.userid).get().then(async (data) => {
             let ref = data.data()
