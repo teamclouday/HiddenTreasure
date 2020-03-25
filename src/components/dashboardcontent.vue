@@ -29,25 +29,34 @@
                 <button id="bio_update" @click="updateUserBio">Update Profile</button>
             </v-tab>
             <v-tab title="Community" class="content_inside" style="overflow-y: scroll;">
-                <div v-if="!userProfile.followers && !userProfile.following" style="text-align:center;">
+                <div v-if="(!userProfile.followers && !userProfile.following) || (userProfile.followers.length <= 0 && userProfile.following.length <= 0)" style="text-align:center;">
                     No activity yet
                 </div>
                 <div v-if="userProfile.followers">
-                    <div v-for="(item, index) in userProfile.followers" v-bind:key="index" class="follow_activity" @click="gotoUser(item.userid, item.username)">
-                        <b>{{item.username}}</b> followed you on {{convertDate(item.time)}}
+                    <div v-for="(item, index) in userProfile.followers" v-bind:key="index" class="activity" @click="gotoUser(item.userid, item.username)">
+                        <b>{{item.username}}</b> followed you on <i>{{convertDate(item.time)}}</i>
                     </div>
                 </div>
                 <div v-if="userProfile.following">
-                    <div v-for="(item, index) in userProfile.following" v-bind:key="index" class="follow_activity" @click="gotoUser(item.userid, item.username)">
-                        You followed <b>{{item.username}}</b> on {{convertDate(item.time)}}
+                    <div v-for="(item, index) in userProfile.following" v-bind:key="index" class="activity" @click="gotoUser(item.userid, item.username)">
+                        You followed <b>{{item.username}}</b> on <i>{{convertDate(item.time)}}</i>
                     </div>
                 </div>
             </v-tab>
-            <v-tab title="Selling" class="content_inside">
-                Nothing here yet
+            <v-tab title="Selling" class="content_inside" style="overflow-y: scroll;">
+                <div v-if="userProfile.items_sell && Object.keys(userProfile.items_sell).length <= 0" style="text-align:center;">
+                    No activity yet
+                </div>
+                <div v-else>
+                    <div v-for="(item, index) in itemsnap.filter((x) => Object.keys(userProfile.items_sell).indexOf(x.ID) !== -1)" v-bind:key="index" class="activity" @click="gotoItem(item.ID, item.ItemName)">
+                        You're selling <b>{{item.ItemName}}</b> at price ${{item.ItemPrice}} from <i>{{convertDate(userProfile.items_sell[item.ID])}}</i>
+                    </div>
+                </div>
             </v-tab>
             <v-tab title="Bought" class="content_inside">
-                Nothing here yet
+                <div v-if="userProfile.items_buy && Object.keys(userProfile.items_buy).length <= 0" style="text-align:center;">
+                    No activity yet
+                </div>
             </v-tab>
             <v-tab title="Security" class="content_inside">
                 <form class="reset" name="resetForm" @submit.prevent>
@@ -73,7 +82,7 @@ const fb = require('@/firebaseConfig')
 export default {
     name: "DashBoardContent",
     computed: {
-        ...mapState(['userProfile', 'currentUser', 'dashboardtabid']),
+        ...mapState(['userProfile', 'currentUser', 'dashboardtabid', 'itemsnap']),
     },
     data(){
         return{
@@ -279,6 +288,10 @@ export default {
         gotoUser(userid, username)
         {
             this.$router.push('/dashboard/' + userid + "/name/" + username)
+        },
+        gotoItem(itemid, itemname)
+        {
+            this.$router.push('/items/' + itemid + '/name/' + itemname)
         }
     },
     // mounted: function(){
@@ -294,7 +307,7 @@ export default {
 </script>
 
 <style scoped>
-.follow_activity
+.activity
 {
     border-style: solid;
     border-color: rgb(255, 164, 136);
@@ -306,13 +319,13 @@ export default {
     padding: 5px;
     cursor: pointer;
     background-color: rgb(255, 164, 136);
-    height: 30px;
+    min-height: 30px;
     font-size: 25px;
     font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
     transition-duration: 0.5s;
 }
 
-.follow_activity:hover
+.activity:hover
 {
     border-color: black;
 }

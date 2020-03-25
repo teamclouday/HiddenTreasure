@@ -19,7 +19,7 @@ if (data && (typeof data === "object")) {
       data[docKey]["Item Rating"] = 0
       data[docKey]["Item Raters Count"] = 0
       data[docKey]["Item Raters Ids"] = []
-      data[docKey]["Item Owner ID"] = "w7lk7a1UlXV43MnsmFT9uykwCCJ3"
+      data[docKey]["Item Owner ID"] = "5oYqWErgk5TaTWwMYONKFwxmYaq2"
       data[docKey]["Item Comments"] = []
       firestore.collection(collectionKey).add(data[docKey]).then((res) => {
          ids[res.id] = date.getTime() + i * 5000
@@ -37,7 +37,7 @@ function finish(ids)
    if(Object.keys(ids).length == 50)
    {
       console.log("done")
-      firestore.collection("users").doc("w7lk7a1UlXV43MnsmFT9uykwCCJ3").update({
+      firestore.collection("users").doc("5oYqWErgk5TaTWwMYONKFwxmYaq2").update({
          "items_sell" : ids
       }).catch(err => {
          console.log(err.message)

@@ -13,10 +13,10 @@
             <form @submit.prevent>
                 <div class="tb">
                 <div class="td">
-                    <input type="text" placeholder="Search Again" v-model="searchContent" @keyup.enter="search">
+                    <input type="text" placeholder="Search Again" v-model="searchContent" @keyup.enter="searchItem">
                 </div>
                 <div class="td" id="coverer">
-                  <button type="button" @click="search">
+                  <button type="button" @click="searchItem">
                     <div id="circler"></div>
                     <span></span>
                   </button>
@@ -94,13 +94,14 @@ export default {
         })
     },
     methods: {
-        search: function()
+        searchItem: function()
         {
             if(this.searchContent != '')
             {
                 // this.$router.push('/search/' + this.searchContent).catch(_ => {})
                 // this.$route.params.keywords = this.searchContent
-                this.$router.replace({params: {keywords: this.searchContent}})
+                this.$router.replace({params: {keywords: this.searchContent}}).catch(() => {})
+                this.keyWords = this.searchContent
                 window.location.reload()
             }
             else

@@ -61,7 +61,7 @@ export default {
                     this.$store.commit('setCurrentUser', user.user)
                     this.$store.dispatch('fetchUserProfile')
                     this.performingRequest = false
-                    this.$router.push('/dashboard')
+                    this.$router.push('/')
                 }).catch(err => {
                     this.popupError(err.message)
                     this.performingRequest = false

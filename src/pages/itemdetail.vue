@@ -22,9 +22,10 @@
             <div id="item_numraters">
                 {{itemnumraters}} people have rated this
             </div>
-            <div id="item_seller" @click="gotoSeller">
+            <div id="item_seller" @click="gotoSeller" v-if="!currentUser || currentUser.uid !== itemownerid">
                 Seller: {{itemownername}}
             </div>
+            <button id="item_remove" v-if="currentUser && currentUser.uid == itemownerid" @click="removeItem">Remove Item</button>
         </div>
         <div id="item_comments">
             <div id="item_no_comment" v-if="itemcomments.length <= 0">
@@ -264,17 +265,69 @@ export default {
         },
         removeComment(index, content, userid, date)
         {
-            fb.itemsCollection.doc(this.itemid).update({
-                "Item Comments": this.itemcomments.filter(x => {
-                    x.comment != content &&
-                    x.user != userid &&
-                    x.time != date
-                })
-            }).then(() => {
-                this.itemcomments.splice(index, 1)
-            }).catch(err => {
-                console.log(err.message)
-            })
+            let ref = this
+            let obj = {
+                title: 'Remove Comment?',
+                message: "Are you sure to remove this comment?",
+                type: 'info',
+                customCloseBtnText: 'Cancel',
+                customConfirmBtnText: 'Confirm',
+                useConfirmBtn: true,
+                onConfirm: function()
+                {
+                    fb.itemsCollection.doc(ref.itemid).update({
+                        "Item Comments": ref.itemcomments.filter(x => {
+                            x.comment != content &&
+                            x.user != userid &&
+                            x.time != date
+                        })
+                    }).then(() => {
+                        ref.itemcomments.splice(index, 1)
+                    }).catch(err => {
+                        console.log(err.message)
+                    })
+                }
+            }
+            this.$refs.simplert.openSimplert(obj)
+        },
+        removeItem()
+        {
+            console.log(this.itemid)
+            let ref = this
+            let obj = {
+                title: 'Remove Item?',
+                message: "Are you sure to remove this item?",
+                type: 'info',
+                customCloseBtnText: 'Cancel',
+                customConfirmBtnText: 'Confirm',
+                useConfirmBtn: true,
+                onConfirm: function()
+                {
+                    fb.itemsCollection.doc(ref.itemid).delete().then(() => {
+                        delete ref.userProfile.items_sell[ref.itemid]
+                        fb.usersCollection.doc(ref.currentUser.uid).update(ref.userProfile).then(() => {
+                            let refref = ref
+                            let obj = {
+                                title: 'Remove Success',
+                                message: "Successfully Removed the Item for Selling",
+                                type: 'success',
+                                customCloseBtnText: 'OK',
+                                onClose: function()
+                                {
+                                    refref.$store.dispatch('updateItems')
+                                    refref.$router.push('/')
+                                }
+                            }
+                            ref.$refs.simplert.openSimplert(obj)
+                        }).catch(err => {
+                            console.log(err)
+                        })
+                    }).catch(err => {
+                        console.log(err)
+                    })
+                }
+            }
+            this.$refs.simplert.openSimplert(obj)
         }
     },
     computed: {
@@ -284,6 +337,27 @@ export default {
 </script>
 
 <style scoped>
+#item_remove
+{
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 30px;
+    width: 15%;
+    font-size: 20px;
+    border-radius: 5px;
+    border-style: solid;
+    outline: none;
+    cursor: pointer;
+    transition-duration: 0.5s;
+    overflow: hidden;
+}
+
+#item_remove:hover
+{
+    border-color: black;
+}
+
 #item_name
 {
     width: 80%;

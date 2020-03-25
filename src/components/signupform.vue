@@ -81,7 +81,7 @@ export default {
                                 type: 'success',
                                 customCloseBtnText: 'OK',
                                 onClose: function(){
-                                    this.$router.push('/dashboard')
+                                    this.$router.push('/')
                                 },
                                 showXclose: true
                             }

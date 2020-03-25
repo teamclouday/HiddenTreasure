@@ -20,7 +20,7 @@
             </div>
             <button v-if="currentUser" id="follow_btn" @click="follow">Follow</button>
             <label for="bio" id="bio_label">Bio</label>
-            <textarea name="bio" rows="2" maxlength="100" placeholder="Enter Your Bio Here" wrap="soft" id="bio_text" v-model="userbio" readonly></textarea>
+            <textarea name="bio" rows="2" maxlength="100" placeholder="No bio yet" wrap="soft" id="bio_text" v-model="userbio" readonly></textarea>
             <div id="activity_title">Recent Activity</div>
             <div id="activity">
                 <div id="activity_none" v-if="recentitems.length <= 0"><br/>No recent activity</div>
@@ -179,7 +179,8 @@ export default {
                         fb.usersCollection.doc(this.currentUser.uid).update({
                             following: firebase.firestore.FieldValue.arrayUnion(newdatacopy)
                         }).then(() => {
-                                let obj = {
+                            this.$store.dispatch('fetchUserProfile')
+                            let obj = {
                                 title: 'Follow Successful',
                                 message: "You have successfully followed",
                                 type: 'success',

@@ -6,6 +6,7 @@
         <button v-if="currentUser" class="title_logo_button" @click="logout">Logout</button>
         <router-link v-if="currentUser && showDashBoard" class="title_logo_button" to="/dashboard">Dashboard</router-link>
         <router-link class="title_logo_button" to="/">Home</router-link>
+        <router-link v-if="!showDashBoard && currentUser" to="/upload" class="title_logo_button">Post New Sell</router-link>
     </div>
 </div>
 </template>
