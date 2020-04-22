@@ -35,4 +35,13 @@ firebase serve
 Build the project:  
 ```
 npm run build
-```
+```  
+
+------
+
+### Additional Note  
+To run the project, you will need a firebase project setting.  
+Also, a database should be uploaded to your firestore, using `upload.js` in functions folder.  
+Additionally, you will need an algolia account to link your database with a search engine.  
+In order to link it, you will need to setup and deploy the firebase function in functions.  
+For more information, please post an issue.  
