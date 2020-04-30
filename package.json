@@ -11,7 +11,7 @@
     "algoliasearch": "^4.1.0",
     "babel-helper-vue-jsx-merge-props": "^2.0.3",
     "firebase": "^7.11.0",
-    "jquery": "^3.4.1",
+    "jquery": "^3.5.0",
     "vue": "^2.6.11",
     "vue-headful": "^2.1.0",
     "vue-instantsearch": "^2.7.0",
