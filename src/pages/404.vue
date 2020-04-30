@@ -12,7 +12,7 @@ export default {
     methods:{
         goHome: function()
         {
-            this.$router.push('/')
+            this.$router.push('/').catch(() => {})
         }
     }
 }

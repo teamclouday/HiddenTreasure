@@ -1,7 +1,7 @@
 # Hidden Treasure
 
 A website project for CIS454  
-The website is currently live [here](http://hidden-treasure.online/)  
+The website is currently down [404](http://hidden-treasure.online/)  
 
 ------  
 

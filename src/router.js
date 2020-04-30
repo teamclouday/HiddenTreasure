@@ -18,15 +18,15 @@ const router = new VueRouter({
     mode: 'history',
     base: __dirname,
     routes:[
-      {path: '/', name: 'Home', component: AppHome},
-      {path: '/info', name: 'Info', component: AppInfo},
-      {path: '/signup', name: 'SignUp', component: AppSignup},
-      {path: '/login', name: 'Login', component: AppLogin},
-      {path: '/upload', name: 'Upload', component: Upload},
-      {path: '/dashboard', name: 'Dashboard', component: AppDashboard, meta:{requiresAuth: true}},
-      {path: '/items/:itemid/name/:itemname', name: 'Item', component: ItemDetail},
-      {path: '/dashboard/:otheruserid/name/:othername', name: 'Others Dashboard', component: AppDashboardSimple},
-      {path: '/search/:keywords', name: 'Search', component: Search},
+      // {path: '/', name: 'Home', component: AppHome},
+      // {path: '/info', name: 'Info', component: AppInfo},
+      // {path: '/signup', name: 'SignUp', component: AppSignup},
+      // {path: '/login', name: 'Login', component: AppLogin},
+      // {path: '/upload', name: 'Upload', component: Upload},
+      // {path: '/dashboard', name: 'Dashboard', component: AppDashboard, meta:{requiresAuth: true}},
+      // {path: '/items/:itemid/name/:itemname', name: 'Item', component: ItemDetail},
+      // {path: '/dashboard/:otheruserid/name/:othername', name: 'Others Dashboard', component: AppDashboardSimple},
+      // {path: '/search/:keywords', name: 'Search', component: Search},
       {path: '*', name: '404', component: PageNotFound}
     ]
 })
